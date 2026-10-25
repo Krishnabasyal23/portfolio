@@ -22,6 +22,10 @@
 
 <main id="top">
 
+  <div class="sky">
+  <!-- Prayer flags (lungta): blue, white, red, green, yellow -->
+  <div class="flags" aria-hidden="true"></div>
+
   <!-- Hero: mandala + intro -->
   <section class="hero">
     <svg class="mandala" viewBox="-200 -200 400 400" role="img" aria-label="Decorative mandala">
@@ -52,7 +56,7 @@
     </svg>
 
     <div class="intro">
-      <p class="kicker">प्रमाणित &middot; verified</p>
+      <p class="kicker">नमस्ते &middot; namaste</p>
       <h1>Krishna</h1>
       <p class="lede">I build systems that show their work: games where fairness can be checked, simulations from the kitchen line, and analysis you can re-run.</p>
       <p class="sub">University student &middot; line cook &middot; aiming for a junior IT / data role</p>
@@ -60,7 +64,16 @@
     </div>
   </section>
 
+  <!-- Himalayan ridge at sunrise -->
+  <svg class="ridge" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="far" d="M0 160V96L90 58 150 88 260 24 340 80 430 40 520 92 630 30 720 84 810 18 910 82 1010 44 1100 90 1200 60V160Z"/>
+    <path class="snow" d="M260 24 238 48 254 44 262 54 274 44 284 50ZM810 18 786 46 802 42 812 52 824 42 838 48Z"/>
+    <path class="near" d="M0 160V118L110 92 210 116 330 78 450 120 580 96 700 124 830 90 960 122 1080 100 1200 118V160Z"/>
+  </svg>
+  </div>
+
   <!-- Work -->
+  <div class="dhaka" aria-hidden="true"></div>
   <section id="work" class="scroll">
     <h2 class="section-title"><span class="dev">कार्य</span> Work</h2>
     <p class="section-note">Each panel ends in a stamp. A stamp only says VERIFIABLE if you can check the claim yourself.</p>
@@ -145,6 +158,7 @@
     </article>
   </section>
 
+  <div class="dhaka" aria-hidden="true"></div>
   <!-- Colophon -->
   <section id="colophon" class="scroll colophon">
     <h2 class="section-title"><span class="dev">निवेदन</span> Colophon</h2>
@@ -161,7 +175,16 @@
 </main>
 
 <footer>
-  <p>Hand-built in plain HTML and CSS. Mandala drawn in SVG. Patterns inspired by Newar paubha ornament; no sacred imagery is depicted.</p>
+  <svg class="pagoda" viewBox="0 0 200 120" aria-hidden="true">
+    <g fill="currentColor">
+      <rect x="99" y="6" width="2" height="20"/><circle cx="100" cy="6" r="3"/>
+      <path d="M78 40Q89 36 100 26Q111 36 122 40L116 45H84Z"/><rect x="90" y="45" width="20" height="9"/>
+      <path d="M64 68Q82 64 100 54Q118 64 136 68L130 73H70Z"/><rect x="84" y="73" width="32" height="9"/>
+      <path d="M48 96Q74 92 100 82Q126 92 152 96L146 101H54Z"/><rect x="76" y="101" width="48" height="14"/>
+      <rect x="66" y="115" width="68" height="5"/>
+    </g>
+  </svg>
+  <p>Hand-built in plain HTML, CSS and SVG. Inspired by Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs; no sacred imagery is depicted.</p>
 </footer>
 
 <script src="script.js"></script>

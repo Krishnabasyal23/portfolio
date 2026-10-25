@@ -41,11 +41,20 @@ a { color: inherit; }
 .top nav a { text-decoration: none; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
 .top nav a:hover { color: var(--gold); }
 
+/* sky: sunrise glow behind the flags, hero and ridge */
+.sky { background: linear-gradient(180deg, var(--deep) 0%, var(--deep) 40%, #7a1a12 80%, #c0452a 100%); }
+
+/* prayer flags: blue, white, red, green, yellow, repeated along a string */
+.flags {
+  height: 40px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='40'%3E%3Cpath d='M0 3H150' stroke='%23b88a2e' stroke-width='2'/%3E%3Crect x='3' y='4' width='24' height='30' fill='%231d4e9e'/%3E%3Crect x='33' y='4' width='24' height='30' fill='%23f4efe6'/%3E%3Crect x='63' y='4' width='24' height='30' fill='%23c0392b'/%3E%3Crect x='93' y='4' width='24' height='30' fill='%232e7d4f'/%3E%3Crect x='123' y='4' width='24' height='30' fill='%23e8b923'/%3E%3C/svg%3E") repeat-x;
+}
+
 /* hero */
 .hero {
   display: grid; grid-template-columns: minmax(260px, 1fr) 1fr; gap: 40px;
   align-items: center; max-width: 1100px; margin: 0 auto;
-  padding: 72px max(16px, 4vw) 96px;
+  padding: 56px max(16px, 4vw) 48px;
 }
 .mandala { width: 100%; max-width: 460px; justify-self: center; }
 .mandala .ring { fill: none; stroke: var(--gold); stroke-width: 1.5; }
@@ -67,6 +76,19 @@ h1 { margin: 4px 0 14px; font: 700 clamp(48px, 9vw, 88px)/1 var(--serif); color:
   border: 2px solid var(--gold); border-radius: 2px;
 }
 .cta:hover { background: transparent; color: var(--gold); }
+
+/* Himalayan ridge: far range in indigo, snow caps, near range merges into the page */
+.ridge { display: block; width: 100%; height: clamp(80px, 13vw, 170px); }
+.ridge .far { fill: var(--indigo); }
+.ridge .snow { fill: var(--parchment); }
+.ridge .near { fill: var(--deep); }
+
+/* dhaka-fabric style divider */
+.dhaka {
+  height: 18px; max-width: 900px; margin: 8px auto 40px;
+  border-block: 2px solid var(--gold-dim);
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Crect width='28' height='14' fill='%232a0907'/%3E%3Cpath d='M0 14 7 1 14 14Z' fill='%23c0392b'/%3E%3Cpath d='M14 14 21 1 28 14Z' fill='%231d4e9e'/%3E%3Cpath d='M7 14 10.5 8 14 14Z' fill='%23e8b923'/%3E%3Cpath d='M21 14 24.5 8 28 14Z' fill='%232e7d4f'/%3E%3C/svg%3E") center/auto 14px repeat-x;
+}
 
 /* sections */
 .scroll { max-width: 900px; margin: 0 auto; padding: 24px max(16px, 4vw) 72px; }
@@ -112,6 +134,7 @@ kbd { padding: 0 6px; border: 1px solid var(--ink); border-radius: 3px; font: 13
 /* colophon */
 .colophon .panel p:first-child { margin-top: 0; font: italic 500 20px var(--serif); }
 
+footer .pagoda { width: 110px; margin: 0 auto 14px; display: block; opacity: .85; }
 footer { padding: 36px max(16px, 4vw) 56px; text-align: center; font-size: 13px; color: var(--gold); border-top: 2px solid var(--gold-dim); }
 footer p { max-width: 640px; margin: 0 auto; }
 
