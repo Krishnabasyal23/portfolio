@@ -17,6 +17,29 @@
 </head>
 <body>
 
+<!-- Shared drawings: one engraved-style cat reused with <use>, plus a hatching pattern for plates -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="4" height="4" fill="#e9d6a8"/>
+      <path d="M0 0V4" stroke="#2a1810" stroke-opacity=".55" stroke-width=".9"/>
+    </pattern>
+    <symbol id="cat" viewBox="0 0 100 100">
+      <g style="fill:var(--cat-fill,transparent);stroke:currentColor;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round">
+        <path fill="none" d="M68 94C96 92 98 62 80 60"/>
+        <path d="M30 95C20 72 30 52 50 52C70 52 80 72 70 95Z"/>
+        <path d="M36 27L35 9L49 21Z"/><path d="M64 27L65 9L51 21Z"/>
+        <circle cx="50" cy="38" r="17"/>
+        <ellipse cx="43.5" cy="36" rx="3.2" ry="4"/><ellipse cx="56.5" cy="36" rx="3.2" ry="4"/>
+        <path d="M48 42h4l-2 2.6Z"/>
+        <path fill="none" d="M50 44.6Q47 49 43 47M50 44.6Q53 49 57 47"/>
+        <path fill="none" d="M38 43L26 41M38 46L26 49M62 43L74 41M62 46L74 49"/>
+        <path fill="none" d="M44 95V80M56 95V80"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
 <header class="top">
   <a class="mark" href="#top" aria-label="Top">क</a>
   <nav aria-label="Sections">
@@ -31,7 +54,7 @@
 
   <div class="sky">
   <!-- Prayer flags (lungta): blue, white, red, green, yellow -->
-  <div class="flags" aria-hidden="true"></div>
+  <div class="flags" aria-hidden="true"><svg class="cat on-string"><use href="#cat"/></svg></div>
 
   <!-- Hero: mandala + intro -->
   <section class="hero">
@@ -227,6 +250,7 @@
 </main>
 
 <footer>
+  <div class="temple">
   <svg class="pagoda" viewBox="0 0 200 120" aria-hidden="true">
     <g fill="currentColor">
       <rect x="99" y="6" width="2" height="20"/><circle cx="100" cy="6" r="3"/>
@@ -236,6 +260,8 @@
       <rect x="66" y="115" width="68" height="5"/>
     </g>
   </svg>
+  <svg class="cat foot-cat" aria-hidden="true"><use href="#cat"/></svg>
+  </div>
   <p>Hand-built in plain HTML, CSS and SVG. Inspired by Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs; no sacred imagery is depicted.</p>
 </footer>
 

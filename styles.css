@@ -42,10 +42,11 @@ a { color: inherit; }
 .top nav a:hover { color: var(--gold); }
 
 /* sky: sunrise glow behind the flags, hero and ridge */
-.sky { background: linear-gradient(180deg, var(--deep) 0%, var(--deep) 40%, #7a1a12 80%, #c0452a 100%); }
+.sky { padding-top: 52px; background: linear-gradient(180deg, var(--deep) 0%, var(--deep) 40%, #7a1a12 80%, #c0452a 100%); }
 
 /* prayer flags: blue, white, red, green, yellow, repeated along a string */
 .flags {
+  position: relative;
   height: 40px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='40'%3E%3Cpath d='M0 3H150' stroke='%23b88a2e' stroke-width='2'/%3E%3Crect x='3' y='4' width='24' height='30' fill='%231d4e9e'/%3E%3Crect x='33' y='4' width='24' height='30' fill='%23f4efe6'/%3E%3Crect x='63' y='4' width='24' height='30' fill='%23c0392b'/%3E%3Crect x='93' y='4' width='24' height='30' fill='%232e7d4f'/%3E%3Crect x='123' y='4' width='24' height='30' fill='%23e8b923'/%3E%3C/svg%3E") repeat-x;
 }
@@ -170,3 +171,10 @@ footer p { max-width: 640px; margin: 0 auto; }
 .links { display: flex; gap: 14px; flex-wrap: wrap; }
 .links a { padding: 8px 20px; font-weight: 500; text-decoration: none; color: var(--parchment); background: var(--vermilion); border: 2px solid var(--vermilion); border-radius: 2px; }
 .links a:hover { background: transparent; color: var(--vermilion); }
+
+/* cats: one drawing, coloured and sized where it is used */
+.cat { display: block; color: var(--gold); --cat-fill: var(--deep); overflow: visible; }
+.on-string { position: absolute; top: -50px; right: 14%; width: 56px; height: 56px; }
+.temple { display: flex; align-items: flex-end; justify-content: center; gap: 18px; margin-bottom: 14px; }
+.temple .pagoda { margin: 0; }
+.foot-cat { width: 56px; height: 56px; }
