@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Krishna — Portfolio</title>
+  <meta name="description" content="Student and line cook building systems that show their work: provably fair games, kitchen simulations and open-data analysis.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Tiro+Devanagari+Hindi&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="mark" href="#top" aria-label="Top">क</a>
+  <nav aria-label="Sections">
+    <a href="#work">Work</a>
+    <a href="#colophon">Colophon</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- Hero: mandala + intro -->
+  <section class="hero">
+    <svg class="mandala" viewBox="-200 -200 400 400" role="img" aria-label="Decorative mandala">
+      <defs>
+        <path id="petal" d="M0-150C22-122 22-92 0-68C-22-92-22-122 0-150Z"/>
+        <path id="petal-lg" d="M0-185C34-150 34-112 0-92C-34-112-34-150 0-185Z"/>
+      </defs>
+      <g class="spin">
+        <circle r="196" class="ring"/>
+        <circle r="172" class="dots"/>
+        <circle r="160" class="ring"/>
+        <g class="petals-lg">
+          <use href="#petal-lg"/><use href="#petal-lg" transform="rotate(45)"/>
+          <use href="#petal-lg" transform="rotate(90)"/><use href="#petal-lg" transform="rotate(135)"/>
+          <use href="#petal-lg" transform="rotate(180)"/><use href="#petal-lg" transform="rotate(225)"/>
+          <use href="#petal-lg" transform="rotate(270)"/><use href="#petal-lg" transform="rotate(315)"/>
+        </g>
+        <g class="petals">
+          <use href="#petal" transform="rotate(22.5)"/><use href="#petal" transform="rotate(67.5)"/>
+          <use href="#petal" transform="rotate(112.5)"/><use href="#petal" transform="rotate(157.5)"/>
+          <use href="#petal" transform="rotate(202.5)"/><use href="#petal" transform="rotate(247.5)"/>
+          <use href="#petal" transform="rotate(292.5)"/><use href="#petal" transform="rotate(337.5)"/>
+        </g>
+        <circle r="62" class="ring"/>
+      </g>
+      <circle r="52" class="core"/>
+      <text class="glyph" y="22" text-anchor="middle">क</text>
+    </svg>
+
+    <div class="intro">
+      <p class="kicker">प्रमाणित &middot; verified</p>
+      <h1>Krishna</h1>
+      <p class="lede">I build systems that show their work: games where fairness can be checked, simulations from the kitchen line, and analysis you can re-run.</p>
+      <p class="sub">University student &middot; line cook &middot; aiming for a junior IT / data role</p>
+      <a class="cta" href="#work">Unroll the work</a>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work" class="scroll">
+    <h2 class="section-title"><span class="dev">कार्य</span> Work</h2>
+    <p class="section-note">Each panel ends in a stamp. A stamp only says VERIFIABLE if you can check the claim yourself.</p>
+
+    <article class="panel reveal">
+      <div class="num" aria-hidden="true">१</div>
+      <div class="body">
+        <h3>Catino</h3>
+        <p class="tag">A crash game where the crash is a cat getting distracted.</p>
+        <p>Up to 60 people join from their phones by scanning a QR code and bet on the same cat. Four seasons each change one rule, and the forecast shows the next three in advance.</p>
+        <h4>What it proves</h4>
+        <ul>
+          <li><strong>Provable fairness.</strong> The server publishes a SHA-256 seal of its secret before anyone can cash out. Every player's device adds a random seed, and the crash point is the server value XOR a hash of all seeds, so neither side can steer it.</li>
+          <li><strong>Server is the source of truth.</strong> Payouts use exact decimals; the client only displays.</li>
+          <li><strong>Honest odds.</strong> Season bonuses default to +4%, which keeps every strategy under 100% return.</li>
+        </ul>
+        <p class="meta">Unity 6 &middot; C# &middot; Python server (a friend's repo; I built the client against it) &middot; SHA-256 &middot; MIT licence</p>
+      </div>
+      <div class="seal">
+        <div class="stamp ok" role="img" aria-label="Status: verifiable"><span>Verifiable</span></div>
+        <p class="proof">Proof: press <kbd>Q</kbd> in the game to open Schrödinger's Box and see the seal, seeds and math checked.</p>
+      </div>
+    </article>
+
+    <article class="panel reveal">
+      <div class="num" aria-hidden="true">२</div>
+      <div class="body">
+        <h3>Line Ready</h3>
+        <p class="tag">A kitchen training simulation, built from the line.</p>
+        <p>A cook gets a ticket, follows a recipe spec, portions ingredients on a scale and handles an allergen constraint. A deterministic grader turns the action log into feedback that explains itself. The restaurant and menu are fictional.</p>
+        <h4>What it proves</h4>
+        <ul>
+          <li><strong>Rules separate from the engine.</strong> The domain and grader are plain C# with their own tests, outside Unity.</li>
+          <li><strong>Replayable.</strong> Player actions are recorded as a log and the plate is rebuilt from it, which is what makes grading explainable.</li>
+          <li><strong>End to end, planned.</strong> Interaction → rules → event → database → SQL metrics → dashboard.</li>
+        </ul>
+        <p class="meta">Unity 6 &middot; C# &middot; backend and SQL dashboard next &middot; a training prototype, not validated training software</p>
+      </div>
+      <div class="seal">
+        <div class="stamp wip" role="img" aria-label="Status: in progress"><span>In progress</span></div>
+        <p class="proof">Done: scale spike, scoring, action log. Next: grader feedback, backend, dashboard.</p>
+      </div>
+    </article>
+
+    <article class="panel reveal">
+      <div class="num" aria-hidden="true">३</div>
+      <div class="body">
+        <h3>FairDraw</h3>
+        <p class="tag">Pick a winner in a way anyone can verify.</p>
+        <p>Commit to the entrant list and the rules before a fixed future public randomness round, then map that round's value to an entrant with a specified, unbiased algorithm. Catino's fairness idea, without the game.</p>
+        <p class="meta">Short build planned for November 2026</p>
+      </div>
+      <div class="seal">
+        <div class="stamp plan" role="img" aria-label="Status: planned"><span>Planned</span></div>
+      </div>
+    </article>
+
+    <article class="panel reveal">
+      <div class="num" aria-hidden="true">४</div>
+      <div class="body">
+        <h3>DineSafe Atlas</h3>
+        <p class="tag">One question about Toronto restaurant inspections.</p>
+        <p>An analysis of the city's open inspection data with a reproducible extract, documented missingness, denominators on every number and a small dashboard. Narrow on purpose, not a generic map.</p>
+        <p class="meta">SQL &middot; pandas &middot; planned for December 2026</p>
+      </div>
+      <div class="seal">
+        <div class="stamp plan" role="img" aria-label="Status: planned"><span>Planned</span></div>
+      </div>
+    </article>
+
+    <article class="panel reveal">
+      <div class="num" aria-hidden="true">५</div>
+      <div class="body">
+        <h3>Receipt Index</h3>
+        <p class="tag">A personal grocery price index.</p>
+        <p>Collecting receipts now and analysing later: normalising messy items, price per unit, a weighted personal index, compared against the national statistics series.</p>
+        <p class="meta">Collection phase only; analysis once there is enough history</p>
+      </div>
+      <div class="seal">
+        <div class="stamp plan" role="img" aria-label="Status: planned"><span>Planned</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Colophon -->
+  <section id="colophon" class="scroll colophon">
+    <h2 class="section-title"><span class="dev">निवेदन</span> Colophon</h2>
+    <div class="panel reveal single">
+      <div class="body">
+        <p>Like the inscription at the foot of a paubha, this is who made the work and why.</p>
+        <p>I'm a university student who also works the line in a commercial kitchen. That's where the ideas come from: tickets, timing, portions, allergens, and the habit of checking that a thing was done right instead of assuming it was.</p>
+        <p>I'm looking for a junior IT or data role where that habit is useful.</p>
+        <!-- TODO(krishna): add contact email, LinkedIn and GitHub once decided. Don't add dead links. -->
+        <p class="meta">Contact details to be added.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>Hand-built in plain HTML and CSS. Mandala drawn in SVG. Patterns inspired by Newar paubha ornament; no sacred imagery is depicted.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

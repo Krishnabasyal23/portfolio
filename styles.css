@@ -1,0 +1,135 @@
+:root {
+  --vermilion: #9b2218;
+  --deep: #4a0f0b;
+  --gold: #e2b04a;
+  --gold-dim: #b88a2e;
+  --parchment: #f3e6c8;
+  --ink: #2a1810;
+  --indigo: #1f2f5c;
+  --green: #2f6b57;
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Work Sans", system-ui, sans-serif;
+  --dev: "Tiro Devanagari Hindi", "Noto Serif Devanagari", serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font: 17px/1.65 var(--sans);
+  color: var(--parchment);
+  background-color: var(--deep);
+  /* tiny repeating diamond lattice, the cloth-border feel of a paubha */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 3 25 14 14 25 3 14Z' fill='none' stroke='%23e2b04a' stroke-opacity='.12'/%3E%3C/svg%3E");
+}
+
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+/* header */
+.top {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px max(16px, 4vw);
+  background: rgba(74, 15, 11, .92);
+  border-bottom: 2px solid var(--gold-dim);
+  backdrop-filter: blur(4px);
+}
+.mark { font: 28px var(--dev); text-decoration: none; color: var(--gold); }
+.top nav { display: flex; gap: 22px; }
+.top nav a { text-decoration: none; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+.top nav a:hover { color: var(--gold); }
+
+/* hero */
+.hero {
+  display: grid; grid-template-columns: minmax(260px, 1fr) 1fr; gap: 40px;
+  align-items: center; max-width: 1100px; margin: 0 auto;
+  padding: 72px max(16px, 4vw) 96px;
+}
+.mandala { width: 100%; max-width: 460px; justify-self: center; }
+.mandala .ring { fill: none; stroke: var(--gold); stroke-width: 1.5; }
+.mandala .dots { fill: none; stroke: var(--gold); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 0 10.8; }
+.mandala .petals-lg use { fill: var(--vermilion); stroke: var(--gold); stroke-width: 1.5; }
+.mandala .petals use { fill: var(--indigo); stroke: var(--gold); stroke-width: 1.5; }
+.mandala .core { fill: var(--gold); }
+.mandala .glyph { font: 64px var(--dev); fill: var(--deep); }
+.mandala .spin { transform-origin: center; animation: spin 120s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.kicker { margin: 0; color: var(--gold); font: 22px var(--dev); }
+h1 { margin: 4px 0 14px; font: 700 clamp(48px, 9vw, 88px)/1 var(--serif); color: var(--parchment); }
+.lede { font-size: 20px; max-width: 34em; margin: 0 0 12px; }
+.sub { margin: 0 0 28px; color: var(--gold); letter-spacing: .04em; }
+.cta {
+  display: inline-block; padding: 12px 26px; text-decoration: none;
+  background: var(--gold); color: var(--deep); font-weight: 500;
+  border: 2px solid var(--gold); border-radius: 2px;
+}
+.cta:hover { background: transparent; color: var(--gold); }
+
+/* sections */
+.scroll { max-width: 900px; margin: 0 auto; padding: 24px max(16px, 4vw) 72px; }
+.section-title { font: 700 36px var(--serif); margin: 0 0 6px; color: var(--gold); }
+.section-title .dev { font-family: var(--dev); font-weight: 400; margin-right: 10px; }
+.section-note { margin: 0 0 32px; opacity: .85; }
+
+/* panels: parchment inside a gold double frame */
+.panel {
+  position: relative;
+  display: grid; grid-template-columns: 56px 1fr 190px; gap: 24px;
+  margin-bottom: 36px; padding: 30px 28px;
+  color: var(--ink); background: var(--parchment);
+  border: 4px double var(--gold-dim);
+  outline: 3px solid var(--vermilion); outline-offset: -11px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+}
+.panel.single { grid-template-columns: 1fr; }
+.num { font: 46px/1 var(--dev); color: var(--vermilion); }
+.panel h3 { margin: 0; font: 700 30px/1.15 var(--serif); }
+.tag { margin: 2px 0 12px; font: italic 500 18px var(--serif); color: var(--indigo); }
+.panel h4 { margin: 18px 0 6px; font: 500 13px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--vermilion); }
+.panel ul { margin: 0; padding-left: 20px; }
+.panel li { margin-bottom: 6px; }
+.meta { margin: 16px 0 0; font-size: 14px; color: #5a4636; border-top: 1px solid var(--gold-dim); padding-top: 10px; }
+kbd { padding: 0 6px; border: 1px solid var(--ink); border-radius: 3px; font: 13px monospace; background: #fff8e6; }
+
+/* rubber stamps */
+.seal { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.stamp {
+  display: grid; place-items: center; width: 132px; height: 132px;
+  border: 4px double currentColor; border-radius: 50%;
+  transform: rotate(-9deg);
+  font: 700 17px/1.1 var(--serif); letter-spacing: .1em; text-transform: uppercase;
+  opacity: .88; background: rgba(255, 255, 255, .15);
+}
+.stamp span { padding: 6px 10px; border-top: 2px solid; border-bottom: 2px solid; }
+.stamp.ok { color: var(--green); }
+.stamp.wip { color: var(--indigo); }
+.stamp.plan { color: #7a6a58; border-style: dashed; }
+.proof { margin: 0; font-size: 13px; line-height: 1.45; color: #4a3a2c; }
+
+/* colophon */
+.colophon .panel p:first-child { margin-top: 0; font: italic 500 20px var(--serif); }
+
+footer { padding: 36px max(16px, 4vw) 56px; text-align: center; font-size: 13px; color: var(--gold); border-top: 2px solid var(--gold-dim); }
+footer p { max-width: 640px; margin: 0 auto; }
+
+/* scroll reveal: content is visible by default; JS adds .armed to opt in */
+.armed .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
+.armed .reveal.in { opacity: 1; transform: none; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: 1fr; padding-top: 40px; text-align: center; }
+  .lede { margin-inline: auto; }
+  .panel { grid-template-columns: 1fr; gap: 14px; padding: 26px 22px; }
+  .num { font-size: 34px; }
+  .seal { flex-direction: row; text-align: left; }
+  .stamp { width: 104px; height: 104px; flex: none; font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .mandala .spin { animation: none; }
+  .armed .reveal { transition: none; }
+}
