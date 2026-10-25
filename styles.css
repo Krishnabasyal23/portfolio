@@ -186,3 +186,11 @@ footer p { max-width: 640px; margin: 0 auto; }
 .tag + p::first-letter { float: left; padding: 6px 10px 0 0; font: 700 3.6em/.8 var(--serif); color: var(--vermilion); text-shadow: 1px 1px 0 var(--gold-dim); }
 .section-title { display: flex; align-items: center; gap: 16px; }
 .section-title::after { content: ""; flex: 1; height: 6px; border-block: 1px solid var(--gold-dim); }
+
+/* bestiary plate in the colophon */
+.colophon .panel.has-plate { grid-template-columns: 1fr 220px; align-items: start; }
+.plate { margin: 0; text-align: center; }
+.plate svg { width: 100%; max-width: 220px; background: #f1e2bd; box-shadow: 0 2px 8px rgba(42, 24, 16, .3); }
+.plate figcaption { margin-top: 8px; font: italic 14px/1.4 var(--serif); color: #4a3a2c; }
+.pupil { transition: transform .08s linear; }
+@media (max-width: 760px) { .colophon .panel.has-plate { grid-template-columns: 1fr; } .plate { max-width: 220px; margin: 0 auto; } }
