@@ -156,3 +156,11 @@ footer p { max-width: 640px; margin: 0 auto; }
   .mandala .spin { animation: none; }
   .armed .reveal { transition: none; }
 }
+
+/* skills */
+.skills { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.skills h4 { margin-top: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
+.chips li { margin: 0; padding: 4px 12px; font-size: 15px; background: var(--indigo); color: var(--parchment); border-radius: 2px; }
+.chips.soft li { background: transparent; color: var(--indigo); border: 1.5px dashed var(--indigo); }
+@media (max-width: 760px) { .skills { grid-template-columns: 1fr; } }
