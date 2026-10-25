@@ -194,3 +194,28 @@ footer p { max-width: 640px; margin: 0 auto; }
 .plate figcaption { margin-top: 8px; font: italic 14px/1.4 var(--serif); color: #4a3a2c; }
 .pupil { transition: transform .08s linear; }
 @media (max-width: 760px) { .colophon .panel.has-plate { grid-template-columns: 1fr; } .plate { max-width: 220px; margin: 0 auto; } }
+
+/* game */
+.track { position: relative; height: 96px; border-bottom: 3px double var(--gold-dim); }
+.runner { --cat-fill: #e9d6a8; color: var(--ink); position: absolute; bottom: 0; width: 64px; height: 64px;
+  left: calc(var(--p, 0) * (100% - 64px)); }
+.fly { position: absolute; bottom: 30px; width: 36px; left: calc(var(--p, 0) * (100% - 64px) + 66px); animation: flutter .4s ease-in-out infinite alternate; }
+@keyframes flutter { to { transform: translateY(-6px) rotate(8deg); } }
+.mult { margin: 14px 0 6px; font: 700 56px/1 var(--serif); color: var(--vermilion); text-align: center; }
+.controls { display: flex; gap: 12px; justify-content: center; margin-bottom: 12px; }
+.btn { padding: 10px 26px; font: 500 16px var(--sans); color: var(--parchment); background: var(--vermilion); border: 2px solid var(--vermilion); border-radius: 2px; cursor: pointer; }
+.btn:hover:not(:disabled) { background: transparent; color: var(--vermilion); }
+.btn.alt { background: var(--indigo); border-color: var(--indigo); }
+.btn.alt:hover:not(:disabled) { background: transparent; color: var(--indigo); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.status { text-align: center; min-height: 3.3em; margin: 0 0 8px; }
+.seal-line { margin: 4px 0; font-size: 13px; display: flex; gap: 10px; align-items: baseline; }
+.seal-line span { flex: none; width: 52px; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; color: var(--vermilion); }
+.seal-line code { overflow-wrap: anywhere; font: 12px/1.4 ui-monospace, Consolas, monospace; }
+.stats { margin: 12px 0 0; font-size: 14px; color: #5a4636; border-top: 1px solid var(--gold-dim); padding-top: 10px; }
+@media (max-width: 760px) { .mult { font-size: 44px; } }
+@media (prefers-reduced-motion: reduce) { .fly { animation: none; } }
+
+/* author display rules and svg elements both ignore the hidden attribute unless forced */
+[hidden] { display: none !important; }
+.panel .chips { padding: 0; }

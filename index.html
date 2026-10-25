@@ -45,6 +45,7 @@
   <nav aria-label="Sections">
     <a href="#work">Work</a>
     <a href="#skills">Skills</a>
+    <a href="#play">Play</a>
     <a href="#path">Experience</a>
     <a href="#colophon">Contact</a>
   </nav>
@@ -210,6 +211,34 @@
             <li>Dashboards</li><li>Data cleaning</li>
           </ul>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dhaka" aria-hidden="true"></div>
+  <!-- Play: a pocket Catino. The round is sealed with SHA-256 before it starts and checked afterward. -->
+  <section id="play" class="scroll">
+    <h2 class="section-title"><span class="dev">खेल</span> Play</h2>
+    <p class="section-note">A pocket Catino. Cash out before the cat spots the butterfly. No money, no accounts, same idea as the real game: seal first, reveal after.</p>
+    <div class="panel single reveal" id="game">
+      <div class="body">
+        <div class="track" aria-hidden="true">
+          <svg class="cat runner" id="runner"><use href="#cat"/></svg>
+          <svg class="fly" id="fly" viewBox="0 0 40 30" hidden>
+            <ellipse cx="12" cy="11" rx="10" ry="8" fill="#9b2218"/><ellipse cx="28" cy="11" rx="10" ry="8" fill="#9b2218"/>
+            <ellipse cx="13" cy="22" rx="7" ry="5" fill="#1f2f5c"/><ellipse cx="27" cy="22" rx="7" ry="5" fill="#1f2f5c"/>
+            <rect x="19" y="5" width="2" height="21" fill="#2a1810"/>
+          </svg>
+        </div>
+        <p class="mult" id="mult" aria-live="polite">1.00&times;</p>
+        <div class="controls">
+          <button class="btn" id="go" type="button">Start round</button>
+          <button class="btn alt" id="out" type="button" disabled>Cash out</button>
+        </div>
+        <p class="status" id="status" role="status">Press start. The seal below is committed before the cat moves.</p>
+        <p class="seal-line"><span>Seal</span> <code id="seal">not yet drawn</code></p>
+        <p class="seal-line" id="reveal" hidden><span>Secret</span> <code id="secret"></code></p>
+        <p class="stats">Best cash-out: <strong id="best">none yet</strong> &middot; Rounds: <strong id="rounds">0</strong></p>
       </div>
     </div>
   </section>

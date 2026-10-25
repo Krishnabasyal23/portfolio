@@ -26,3 +26,94 @@ if (pupils.length) {
     }
   });
 }
+
+// Pocket Catino. Each round: pick a secret, publish its SHA-256 (the seal), derive the crash point
+// from a second hash of the same secret, run the round, then reveal the secret so anyone can re-check.
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const go = $("go"), out = $("out");
+  if (!go) return;
+  if (!(window.crypto && crypto.subtle)) {
+    $("status").textContent = "The game needs a secure page (https or localhost) for SHA-256.";
+    go.disabled = true;
+    return;
+  }
+
+  const sha256 = async (text) => {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  };
+  // First 32 bits of the hash become r in [0, 1); 97 / (1 - r) gives a heavy-tailed multiplier,
+  // so about 3% of rounds crash at 1.00x. Capped at 50x.
+  const crashFrom = (hex) => {
+    const r = parseInt(hex.slice(0, 8), 16) / 2 ** 32;
+    return Math.min(50, Math.max(1, Math.floor(97 / (1 - r)) / 100));
+  };
+
+  let secret, seal, crash, t0, mult, running = false, rounds = 0;
+  let best = 0;
+  try { best = parseFloat(localStorage.getItem("catino-lite-best")) || 0; } catch { /* storage blocked: start at none */ }
+  const showBest = () => { $("best").textContent = best ? best.toFixed(2) + "\u00d7" : "none yet"; };
+  showBest();
+
+  const show = (m) => {
+    $("mult").textContent = m.toFixed(2) + "\u00d7";
+    // Distance walked grows with log(multiplier); the cat stops at 80% of the track.
+    $("runner").style.setProperty("--p", Math.min(1, Math.log(m) / Math.log(20)) * 0.8);
+  };
+
+  const start = async () => {
+    go.disabled = true;
+    $("fly").hidden = true;
+    $("reveal").hidden = true;
+    secret = [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, "0")).join("");
+    seal = await sha256(secret);
+    crash = crashFrom(await sha256(secret + ":crash"));
+    $("seal").textContent = seal;
+    $("status").textContent = "Sealed. The cat is walking: cash out before it spots the butterfly.";
+    mult = 1;
+    show(1);
+    running = true;
+    out.disabled = false;
+    t0 = performance.now();
+    requestAnimationFrame(tick);
+  };
+
+  const tick = (now) => {
+    if (!running) return;
+    mult = Math.floor(Math.exp(0.18 * ((now - t0) / 1000)) * 100) / 100;
+    if (mult >= crash) return end(false);
+    show(mult);
+    requestAnimationFrame(tick);
+  };
+
+  const end = async (won) => {
+    running = false;
+    out.disabled = true;
+    rounds += 1;
+    $("rounds").textContent = rounds;
+    $("secret").textContent = secret;
+    $("reveal").hidden = false;
+    // Re-derive everything from the revealed secret, the same check a visitor could do by hand.
+    const ok = (await sha256(secret)) === seal && crashFrom(await sha256(secret + ":crash")) === crash;
+    const check = ok ? " Seal checked: SHA-256 of the secret matches, and the crash point follows from it." : " Seal check failed.";
+    if (won) {
+      show(mult);
+      if (mult > best) {
+        best = mult;
+        try { localStorage.setItem("catino-lite-best", String(mult)); } catch { /* private mode: skip */ }
+        showBest();
+      }
+      $("status").textContent = `Cashed out at ${mult.toFixed(2)}\u00d7. The butterfly was due at ${crash.toFixed(2)}\u00d7.` + check;
+    } else {
+      show(crash);
+      $("fly").hidden = false;
+      $("status").textContent = `Distracted at ${crash.toFixed(2)}\u00d7! The butterfly got there first.` + check;
+    }
+    go.textContent = "Another round";
+    go.disabled = false;
+  };
+
+  go.addEventListener("click", start);
+  out.addEventListener("click", () => running && end(true));
+})();
