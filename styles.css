@@ -219,3 +219,9 @@ footer p { max-width: 640px; margin: 0 auto; }
 /* author display rules and svg elements both ignore the hidden attribute unless forced */
 [hidden] { display: none !important; }
 .panel .chips { padding: 0; }
+
+@media (max-width: 760px) {
+  .top { padding: 10px 12px; }
+  .top nav { gap: 12px; }
+  .top nav a { font-size: 11px; letter-spacing: .04em; }
+}
