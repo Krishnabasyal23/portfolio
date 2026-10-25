@@ -16,3 +16,18 @@ It is plain HTML, CSS and a few lines of JavaScript. There is no build step and 
 ## Notes
 
 Project descriptions cover work in progress. Kitchen-related projects use a fictional demo restaurant and menu.
+
+## Deploying
+
+The site is static, so any static host works. These steps use GitHub Pages.
+
+1. In the repository settings, open Pages and choose "Deploy from a branch", branch `main`, folder `/ (root)`.
+2. Wait for the first build, then open the `github.io` address it shows and check the page.
+
+### Custom domain
+
+1. Add a file named `CNAME` at the repository root containing only the domain, for example `www.example.com.np`, on one line with no protocol.
+2. At the domain registrar, add a `CNAME` record from `www` to `<username>.github.io`. For a bare domain without `www`, use the four A records listed in the GitHub Pages documentation instead.
+3. Back in the Pages settings, enter the domain and turn on "Enforce HTTPS" once the certificate is issued, which can take up to a day.
+
+If the registrar does not allow DNS records, change the domain's nameservers to a DNS provider that does and set the records there.
