@@ -621,9 +621,8 @@ const trek = (() => {
   const setButtons = (h, p, s) => { hold.disabled = !h; pleat.disabled = !p; steam.disabled = !s; };
 
   const nextTicket = () => {
-    let next;
-    do { next = MENU[Math.floor(Math.random() * MENU.length)]; } while (next === spec);
-    spec = next;
+    const others = MENU.filter((item) => item !== spec); // never the same ticket twice in a row
+    spec = others[Math.floor(Math.random() * others.length)];
     grams = 0; pleats = 0; phase = "fill";
     $("m-ticket").textContent = `Ticket ${ok + bad + 1}: ${spec.name}. Filling ${spec.grams} g (plus or minus ${TOL_GRAMS}), ${spec.pleats} pleats (plus or minus ${TOL_PLEATS}).`;
     const lo = spec.grams - TOL_GRAMS, hi = spec.grams + TOL_GRAMS;
