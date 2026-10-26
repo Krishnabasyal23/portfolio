@@ -273,3 +273,8 @@ footer p { max-width: 640px; margin: 0 auto; }
 @keyframes swing { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
 @media (max-width: 900px) { .lantern { display: none; } }
 @media (prefers-reduced-motion: reduce) { .lantern { animation: none; } }
+
+/* red seal (chop): the character means "verify" */
+.chop { float: right; display: grid; place-items: center; width: 58px; height: 58px; margin: 0 0 8px 12px; transform: rotate(-5deg);
+  font: 40px/1 "Ma Shan Zheng", "Noto Serif SC", serif; color: #f6e9c8; background: #b3231a; border-radius: 4px 6px 5px 7px;
+  box-shadow: inset 0 0 0 2px #b3231a, inset 0 0 0 4px #f6e9c8, 0 1px 3px rgba(0, 0, 0, .3); opacity: .92; }
