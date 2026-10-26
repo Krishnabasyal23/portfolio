@@ -117,3 +117,16 @@ if (pupils.length) {
   go.addEventListener("click", start);
   out.addEventListener("click", () => running && end(true));
 })();
+
+// Drifting peach blossoms, drawn as 14 CSS-animated petals. Skipped for visitors who prefer reduced motion.
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const layer = document.createElement("div");
+  layer.className = "petals";
+  layer.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement("i");
+    p.style.cssText = `left:${Math.random() * 100}%;--s:${8 + Math.random() * 8}px;--d:${16 + Math.random() * 14}s;--x:${Math.random() * 160 - 80}px;animation-delay:${-Math.random() * 30}s`;
+    layer.append(p);
+  }
+  document.body.append(layer);
+}
