@@ -29,6 +29,14 @@
       <rect width="4" height="4" fill="#e9d6a8"/>
       <path d="M0 0V4" stroke="#2a1810" stroke-opacity=".55" stroke-width=".9"/>
     </pattern>
+    <symbol id="blossom" viewBox="-10 -10 20 20">
+      <g fill="#f6b6c4" stroke="#d97a92" stroke-width=".5">
+        <ellipse cx="0" cy="-5" rx="3.6" ry="5"/><ellipse cx="0" cy="-5" rx="3.6" ry="5" transform="rotate(72)"/>
+        <ellipse cx="0" cy="-5" rx="3.6" ry="5" transform="rotate(144)"/><ellipse cx="0" cy="-5" rx="3.6" ry="5" transform="rotate(216)"/>
+        <ellipse cx="0" cy="-5" rx="3.6" ry="5" transform="rotate(288)"/>
+      </g>
+      <circle r="1.6" fill="#e2b04a"/>
+    </symbol>
     <symbol id="cat" viewBox="0 0 100 100">
       <g style="fill:var(--cat-fill,transparent);stroke:currentColor;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round">
         <path fill="none" d="M68 94C96 92 98 62 80 60"/>
@@ -59,6 +67,20 @@
 <main id="top">
 
   <div class="sky">
+  <!-- Peach blossom branch in the corner -->
+  <svg class="branch" viewBox="0 0 300 210" aria-hidden="true">
+    <g fill="none" stroke="#2a1008" stroke-linecap="round">
+      <path stroke-width="6" d="M300 18C250 24 205 48 160 88S70 150 18 142"/>
+      <path stroke-width="3.5" d="M215 44C205 70 190 90 170 100"/>
+      <path stroke-width="3" d="M120 112C112 140 96 160 78 170"/>
+      <path stroke-width="2.5" d="M255 24C262 50 258 70 246 86"/>
+    </g>
+    <use href="#blossom" x="226" y="2" width="28" height="28"/><use href="#blossom" x="190" y="28" width="24" height="24"/>
+    <use href="#blossom" x="150" y="60" width="30" height="30"/><use href="#blossom" x="100" y="96" width="26" height="26"/>
+    <use href="#blossom" x="60" y="128" width="30" height="30"/><use href="#blossom" x="4" y="122" width="24" height="24"/>
+    <use href="#blossom" x="232" y="76" width="22" height="22"/><use href="#blossom" x="156" y="96" width="20" height="20"/>
+    <use href="#blossom" x="74" y="158" width="22" height="22"/>
+  </svg>
   <!-- Prayer flags (lungta): blue, white, red, green, yellow -->
   <div class="flags" aria-hidden="true"><svg class="cat on-string"><use href="#cat"/></svg></div>
 
