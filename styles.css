@@ -265,3 +265,11 @@ footer p { max-width: 640px; margin: 0 auto; }
 /* blossom branch: decorative, hidden on narrow screens where it would crowd the text */
 .branch { position: absolute; top: 44px; right: 0; width: 290px; z-index: 2; pointer-events: none; }
 @media (max-width: 900px) { .branch { display: none; } }
+
+/* red lanterns hanging from the top edge, swaying slightly */
+.lantern { position: absolute; top: 0; z-index: 3; width: 44px; pointer-events: none; transform-origin: 50% 0; animation: swing 4.5s ease-in-out infinite alternate; }
+.lantern.l1 { left: 2.5%; }
+.lantern.l2 { left: 7%; width: 36px; animation-duration: 5.4s; animation-delay: -1.8s; }
+@keyframes swing { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+@media (max-width: 900px) { .lantern { display: none; } }
+@media (prefers-reduced-motion: reduce) { .lantern { animation: none; } }
