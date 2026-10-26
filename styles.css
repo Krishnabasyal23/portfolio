@@ -201,7 +201,7 @@ footer p { max-width: 640px; margin: 0 auto; }
 .foot-cat { width: 56px; height: 56px; }
 
 /* vintage print details: illuminated first letter, ruled headings */
-.tag + p::first-letter { float: left; padding: 6px 10px 0 0; font: 700 3.6em/.8 var(--serif); color: var(--vermilion); text-shadow: 1px 1px 0 var(--gold-dim); }
+.tag + p:not(.ticket)::first-letter { float: left; padding: 6px 10px 0 0; font: 700 3.6em/.8 var(--serif); color: var(--vermilion); text-shadow: 1px 1px 0 var(--gold-dim); }
 .section-title { display: flex; align-items: center; gap: 16px; }
 .section-title::after { content: ""; flex: 1; height: 6px; border-block: 1px solid var(--gold-dim); }
 
@@ -358,6 +358,17 @@ footer p { max-width: 640px; margin: 0 auto; }
 .clock .opt { color: var(--gold); }
 
 /* quiet tribute to the Gurkhas: a sheathed khukuri and one line of text */
-.tribute { margin: 0 auto 18px; max-width: 460px; }
+.tribute { margin: 16px auto 18px; max-width: 460px; }
 .khukuri { display: block; width: 150px; margin: 0 auto 8px; }
 .tribute figcaption { font-size: 13px; color: var(--parchment); opacity: .9; }
+
+/* momo rush */
+.ticket { margin: 6px 0 12px; padding: 8px 12px; font: 500 15px var(--sans); background: #fff8e6; border: 1.5px dashed var(--gold-dim); border-radius: 3px; }
+.momo-stage { display: grid; grid-template-columns: 150px 1fr; gap: 6px 22px; align-items: center; }
+.momo { width: 150px; height: 150px; grid-row: span 2; }
+.meter { position: relative; height: 16px; background: #d9c8a0; border: 1.5px solid var(--ink); border-radius: 8px; overflow: hidden; align-self: end; }
+.meter .band { position: absolute; top: 0; bottom: 0; background: #6aaa64; opacity: .85; }
+.meter .mark { position: absolute; top: -2px; bottom: -2px; width: 4px; margin-left: -2px; background: var(--vermilion); }
+.readout { margin: 0; align-self: start; font-variant-numeric: tabular-nums; font-size: 14px; }
+.momo-stage + .controls { margin-top: 14px; flex-wrap: wrap; }
+@media (max-width: 760px) { .momo-stage { grid-template-columns: 1fr; justify-items: center; } .meter { width: 100%; } }

@@ -289,6 +289,30 @@
         <p class="stats">Best cash-out: <strong id="best">none yet</strong> &middot; Rounds: <strong id="rounds">0</strong></p>
       </div>
     </div>
+    <div class="panel single reveal" id="momo">
+      <div class="body">
+        <h3>Momo Rush</h3>
+        <p class="tag">Fill it, fold it, serve it. Every ticket has a spec, and the grader tells you why.</p>
+        <p class="ticket" id="m-ticket">Press start. You have 45 seconds.</p>
+        <div class="momo-stage">
+          <svg class="momo" id="m-svg" viewBox="0 0 200 200" aria-hidden="true">
+            <circle cx="100" cy="100" r="86" fill="#f3e6c8" stroke="#2a1810" stroke-width="3"/>
+            <circle id="m-fill" cx="100" cy="100" r="8" fill="#8a4a2a"/>
+            <g id="m-pleats" fill="none" stroke="#2a1810" stroke-width="3" stroke-linecap="round"></g>
+          </svg>
+          <div class="meter" aria-hidden="true"><div class="band" id="m-band"></div><div class="mark" id="m-mark"></div></div>
+          <p class="readout"><span id="m-weight">0.0</span> g &middot; <span id="m-count">0</span> pleats &middot; <span id="m-time">45</span> s left</p>
+        </div>
+        <div class="controls">
+          <button class="btn" id="m-start" type="button">Start rush</button>
+          <button class="btn alt" id="m-hold" type="button" disabled>Hold to add filling</button>
+          <button class="btn alt" id="m-pleat" type="button" disabled>Pleat</button>
+          <button class="btn" id="m-steam" type="button" disabled>Steam it</button>
+        </div>
+        <p class="status" id="m-status" role="status">Menu is fictional. Hold the filling button until the marker sits in the green band, pleat to the count on the ticket, then steam.</p>
+        <p class="stats">Served right: <strong id="m-ok">0</strong> &middot; Returned: <strong id="m-bad">0</strong> &middot; Best: <strong id="m-best">none yet</strong></p>
+      </div>
+    </div>
   </section>
 
   <div class="dhaka" aria-hidden="true"></div>
@@ -400,7 +424,7 @@
 <!-- Passport: stamps collected by exploring. Filled and shown by script.js. -->
 <button class="pp-btn" id="pp-btn" type="button" aria-expanded="false" aria-controls="pp-panel" hidden>
   <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2.5" width="14" height="19" rx="1.5"/><circle cx="12" cy="10" r="3.2"/><path d="M8.5 17h7"/></svg>
-  <span>Passport <b id="pp-count">0</b>/6</span>
+  <span>Passport <b id="pp-count">0</b>/<span id="pp-total">7</span></span>
 </button>
 <aside class="pp" id="pp-panel" role="dialog" aria-labelledby="pp-title" hidden>
   <button class="pp-close" id="pp-close" type="button" aria-label="Close passport">&times;</button>

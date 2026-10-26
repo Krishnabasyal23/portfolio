@@ -390,13 +390,14 @@ const passport = (() => {
   const $ = (id) => document.getElementById(id);
   const btn = $("pp-btn"), panel = $("pp-panel");
   if (!btn || !panel) return null;
-  const STAMPS = [
+  const STAMPS = [ // the order here is the order in the booklet
     { id: "arrive", label: "Arrived", hint: "Open the site", color: "#1f5a45", tilt: "-7deg" },
     { id: "work", label: "Inspected", hint: "See all five projects", color: "#9b2218", tilt: "5deg" },
     { id: "portal", label: "Portal", hint: "Jump to a section", color: "#a34a12", tilt: "-4deg" },
     { id: "play", label: "Played", hint: "Finish a round of Pocket Catino", color: "#1f2f5c", tilt: "6deg" },
     { id: "cat", label: "Purred", hint: "Pet the cat in the colophon", color: "#6b3a8a", tilt: "-6deg" },
     { id: "reach", label: "Reached", hint: "Scroll down to the colophon", color: "#6b4f0e", tilt: "4deg" },
+    { id: "momo", label: "Folded", hint: "Serve 3 momos in Momo Rush", color: "#8a2e5a", tilt: "-5deg" },
   ];
   let got = {};
   try { got = JSON.parse(localStorage.getItem("portfolio-passport")) || {}; } catch { /* storage blocked: stamps last this visit only */ }
@@ -434,6 +435,7 @@ const passport = (() => {
       grid.append(li);
     }
     $("pp-count").textContent = count();
+    $("pp-total").textContent = STAMPS.length;
     $("pp-visa").hidden = count() < STAMPS.length;
   };
 
@@ -563,4 +565,140 @@ const trek = (() => {
   addEventListener("resize", onScroll);
   apply();
   return { update };
+})();
+
+// Momo Rush. Each ticket has a spec: filling weight and pleat count, each with a tolerance. Hold the filling
+// button to add grams, tap to pleat, then serve. The grader is a plain function that explains every miss.
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const startBtn = $("m-start");
+  if (!startBtn) return;
+  const MENU = [ // fictional demo menu
+    { name: "Veg momo", grams: 16, pleats: 6 },
+    { name: "Chicken momo", grams: 20, pleats: 8 },
+    { name: "Cheese momo", grams: 18, pleats: 7 },
+    { name: "Jhol momo", grams: 22, pleats: 10 },
+  ];
+  const TOL_GRAMS = 2, TOL_PLEATS = 1, SECONDS = 45, MAX_GRAMS = 40, SLOTS = 14, GRAMS_PER_SECOND = 11;
+  const hold = $("m-hold"), pleat = $("m-pleat"), steam = $("m-steam");
+
+  let phase = "idle"; // idle -> fill -> pleat -> result -> (next ticket) ... -> done
+  let spec = null, grams = 0, pleats = 0, ok = 0, bad = 0, endsAt = 0, filling = false, last = 0, timer = 0;
+  let best = 0;
+  try { best = parseInt(localStorage.getItem("momo-best"), 10) || 0; } catch { /* storage blocked */ }
+  const showBest = () => { $("m-best").textContent = best ? best : "none yet"; };
+  showBest();
+
+  // Pleat marks around the rim, drawn once and revealed one by one.
+  const svgNS = "http://www.w3.org/2000/svg";
+  const marks = [];
+  for (let i = 0; i < SLOTS; i++) {
+    const p = document.createElementNS(svgNS, "path");
+    p.setAttribute("d", "M100 18Q108 34 100 52");
+    p.setAttribute("transform", `rotate(${(i * 360) / SLOTS} 100 100)`);
+    p.style.opacity = 0;
+    $("m-pleats").append(p);
+    marks.push(p);
+  }
+
+  const draw = () => {
+    $("m-weight").textContent = grams.toFixed(1);
+    $("m-count").textContent = pleats;
+    $("m-fill").setAttribute("r", Math.min(78, 8 + grams * 1.9));
+    $("m-mark").style.left = (grams / MAX_GRAMS) * 100 + "%";
+    marks.forEach((p, i) => { p.style.opacity = i < pleats ? 1 : 0; });
+  };
+
+  // Pure grader: returns whether the momo met the spec and a list of plain-language reasons.
+  const grade = (s, g, n) => {
+    const reasons = [];
+    const off = g - s.grams;
+    if (Math.abs(off) > TOL_GRAMS) reasons.push(`filling was ${g.toFixed(1)} g, ${Math.abs(off).toFixed(1)} g ${off > 0 ? "over" : "under"} the ${s.grams} g target`);
+    if (Math.abs(n - s.pleats) > TOL_PLEATS) reasons.push(`${n} pleats, wanted ${s.pleats} (plus or minus ${TOL_PLEATS})`);
+    return { pass: reasons.length === 0, reasons };
+  };
+
+  const setButtons = (h, p, s) => { hold.disabled = !h; pleat.disabled = !p; steam.disabled = !s; };
+
+  const nextTicket = () => {
+    let next;
+    do { next = MENU[Math.floor(Math.random() * MENU.length)]; } while (next === spec);
+    spec = next;
+    grams = 0; pleats = 0; phase = "fill";
+    $("m-ticket").textContent = `Ticket ${ok + bad + 1}: ${spec.name}. Filling ${spec.grams} g (plus or minus ${TOL_GRAMS}), ${spec.pleats} pleats (plus or minus ${TOL_PLEATS}).`;
+    const lo = spec.grams - TOL_GRAMS, hi = spec.grams + TOL_GRAMS;
+    $("m-band").style.left = (lo / MAX_GRAMS) * 100 + "%";
+    $("m-band").style.width = ((hi - lo) / MAX_GRAMS) * 100 + "%";
+    setButtons(true, false, false);
+    draw();
+  };
+
+  const fillLoop = (now) => {
+    if (!filling) return;
+    grams = Math.min(MAX_GRAMS, grams + ((now - last) / 1000) * GRAMS_PER_SECOND);
+    last = now;
+    draw();
+    requestAnimationFrame(fillLoop);
+  };
+  const beginFill = () => {
+    if (phase !== "fill" || filling) return;
+    filling = true;
+    last = performance.now();
+    requestAnimationFrame(fillLoop);
+  };
+  const endFill = () => {
+    if (!filling) return;
+    filling = false;
+    if (grams > 0) { phase = "pleat"; setButtons(false, true, true); }
+  };
+
+  hold.addEventListener("pointerdown", (e) => { e.preventDefault(); beginFill(); });
+  ["pointerup", "pointerleave", "pointercancel"].forEach((t) => hold.addEventListener(t, endFill));
+  hold.addEventListener("keydown", (e) => { if ((e.key === " " || e.key === "Enter") && !e.repeat) { e.preventDefault(); beginFill(); } });
+  hold.addEventListener("keyup", (e) => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); endFill(); } });
+
+  pleat.addEventListener("click", () => { if (phase === "pleat") { pleats += 1; draw(); } });
+
+  steam.addEventListener("click", () => {
+    if (phase !== "pleat") return;
+    phase = "result";
+    setButtons(false, false, false);
+    const r = grade(spec, grams, pleats);
+    if (r.pass) { ok += 1; $("m-status").textContent = `Served: ${spec.name}, ${grams.toFixed(1)} g and ${pleats} pleats. Spec met.`; }
+    else { bad += 1; $("m-status").textContent = `Returned: ${r.reasons.join("; ")}.`; }
+    $("m-ok").textContent = ok;
+    $("m-bad").textContent = bad;
+    setTimeout(() => { if (phase === "result") nextTicket(); }, 1300);
+  });
+
+  const finish = () => {
+    clearInterval(timer);
+    filling = false;
+    phase = "done";
+    setButtons(false, false, false);
+    const rank = ok >= 7 ? "Sous chef" : ok >= 5 ? "Line cook" : ok >= 3 ? "Prep cook" : "Still learning";
+    if (ok > best) {
+      best = ok; showBest();
+      try { localStorage.setItem("momo-best", String(ok)); } catch { /* ignore */ }
+    }
+    $("m-ticket").textContent = `Time. ${ok} served right, ${bad} returned. Rank: ${rank}.`;
+    startBtn.textContent = "Rush again";
+    startBtn.disabled = false;
+    if (ok >= 3) document.dispatchEvent(new CustomEvent("stamp", { detail: "momo" }));
+  };
+
+  startBtn.addEventListener("click", () => {
+    ok = 0; bad = 0;
+    $("m-ok").textContent = 0; $("m-bad").textContent = 0;
+    $("m-status").textContent = "Go.";
+    startBtn.disabled = true;
+    endsAt = performance.now() + SECONDS * 1000;
+    timer = setInterval(() => {
+      const left = Math.max(0, Math.ceil((endsAt - performance.now()) / 1000));
+      $("m-time").textContent = left;
+      if (left === 0) finish();
+    }, 200);
+    $("m-time").textContent = SECONDS;
+    nextTicket();
+  });
 })();
