@@ -237,3 +237,18 @@ footer p { max-width: 640px; margin: 0 auto; }
 /* skip link: off-screen until it gets keyboard focus */
 .skip { position: absolute; left: 12px; top: -60px; z-index: 20; padding: 10px 16px; background: var(--gold); color: var(--deep); font-weight: 500; text-decoration: none; border-radius: 2px; }
 .skip:focus { top: 8px; }
+
+/* hanging-scroll panels: lacquered rods top and bottom, and the paper unrolls as it scrolls into view */
+.panel::before, .panel::after {
+  content: ""; position: absolute; left: -10px; right: -10px; height: 16px; border-radius: 8px; z-index: 1;
+  background:
+    radial-gradient(circle at 8px 50%, var(--gold) 0 6px, transparent 7px),
+    radial-gradient(circle at calc(100% - 8px) 50%, var(--gold) 0 6px, transparent 7px),
+    linear-gradient(180deg, #3a0d08, #9b2218 35%, #c0452a 50%, #7a1a12 75%, #3a0d08);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .45);
+}
+.panel::before { top: -14px; }
+.panel::after { bottom: -14px; }
+.armed .panel.reveal { opacity: 1; transform: none; clip-path: inset(-20px -40px 100% -40px); transition: clip-path 1.1s cubic-bezier(.22, .8, .25, 1); }
+.armed .panel.reveal.in { clip-path: inset(-20px -40px -40px -40px); }
+@media (prefers-reduced-motion: reduce) { .armed .panel.reveal { transition: none; } }
