@@ -356,3 +356,8 @@ footer p { max-width: 640px; margin: 0 auto; }
 .opt input { width: 16px; height: 16px; accent-color: var(--vermilion); }
 .pp .opt { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--gold-dim); color: #4a3a2c; }
 .clock .opt { color: var(--gold); }
+
+/* quiet tribute to the Gurkhas: a sheathed khukuri and one line of text */
+.tribute { margin: 0 auto 18px; max-width: 460px; }
+.khukuri { display: block; width: 150px; margin: 0 auto 8px; }
+.tribute figcaption { font-size: 13px; color: var(--parchment); opacity: .9; }
