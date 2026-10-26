@@ -13,7 +13,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
 body {
   margin: 0;
@@ -127,12 +127,12 @@ kbd { padding: 0 6px; border: 1px solid var(--ink); border-radius: 3px; font: 13
   border: 4px double currentColor; border-radius: 50%;
   transform: rotate(-9deg);
   font: 700 17px/1.1 var(--serif); letter-spacing: .1em; text-transform: uppercase;
-  opacity: .88; background: rgba(255, 255, 255, .15);
+  opacity: .94; background: rgba(255, 255, 255, .15);
 }
 .stamp span { padding: 6px 10px; border-top: 2px solid; border-bottom: 2px solid; }
-.stamp.ok { color: var(--green); }
+.stamp.ok { color: #1f5a45; }
 .stamp.wip { color: var(--indigo); }
-.stamp.plan { color: #7a6a58; border-style: dashed; }
+.stamp.plan { color: #675745; border-style: dashed; }
 .proof { margin: 0; font-size: 13px; line-height: 1.45; color: #4a3a2c; }
 
 /* colophon */
@@ -233,3 +233,7 @@ footer p { max-width: 640px; margin: 0 auto; }
 .tiles i { width: 14px; height: 14px; border-radius: 2px; background: #787c7e; }
 .tiles .g { background: #6aaa64; }
 .tiles .y { background: #c9b458; }
+
+/* skip link: off-screen until it gets keyboard focus */
+.skip { position: absolute; left: 12px; top: -60px; z-index: 20; padding: 10px 16px; background: var(--gold); color: var(--deep); font-weight: 500; text-decoration: none; border-radius: 2px; }
+.skip:focus { top: 8px; }
