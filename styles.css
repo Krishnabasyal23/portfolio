@@ -331,3 +331,21 @@ footer p { max-width: 640px; margin: 0 auto; }
 @media (max-width: 760px) { .pp { right: 12px; bottom: 66px; } }
 @media (prefers-reduced-motion: reduce) { .pp-btn.pulse, .plate svg.petted { animation: none; } .pp-toast { transition: none; } }
 .pp h2:focus { outline: none; }
+
+/* altitude meter: a full trail on wide screens, a small readout pill on narrow ones */
+.alt { position: fixed; z-index: 11; left: 12px; bottom: 16px; padding: 8px 14px; color: var(--parchment); background: rgba(42, 9, 7, .88); border: 2px solid var(--gold-dim); border-radius: 999px; font-size: 13px; pointer-events: none; }
+.alt-read { margin: 0; }
+.alt-read b { font-variant-numeric: tabular-nums; color: var(--gold); }
+.alt-read span { margin-left: 4px; opacity: .85; }
+.alt-track { display: none; }
+@media (min-width: 1360px) {
+  .alt { left: 18px; top: 50%; bottom: auto; transform: translateY(-50%); width: 178px; padding: 12px 12px 14px; border-radius: 8px; }
+  .alt-read span { display: block; margin: 2px 0 0; font-size: 12px; }
+  .alt-track { display: block; position: relative; height: min(42vh, 360px); margin: 12px 0 0 14px; border-left: 2px dashed var(--gold-dim); }
+  .alt-stops { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
+  .alt-stops li { position: absolute; left: -6px; bottom: calc(var(--p) * 100%); display: flex; align-items: center; gap: 8px; font-size: 11px; line-height: 1; white-space: nowrap; color: #bda98a; transform: translateY(50%); }
+  .alt-stops li::before { content: ""; width: 10px; height: 10px; flex: none; border: 2px solid var(--gold-dim); border-radius: 50%; background: var(--deep); }
+  .alt-stops li.passed { color: var(--parchment); }
+  .alt-stops li.passed::before { background: var(--gold); border-color: var(--gold); }
+  .alt-cat { position: absolute; left: 22px; bottom: calc(var(--p, 0) * (100% - 26px)); width: 26px; height: 26px; transform: translateX(-4px); }
+}

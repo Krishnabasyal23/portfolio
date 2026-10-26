@@ -487,3 +487,65 @@ const passport = (() => {
   check();
   return { award, say };
 })();
+
+// Altitude meter. Scroll position is mapped onto a trek: each section top is a waypoint with a real altitude,
+// and between two waypoints the altitude is interpolated in a straight line.
+const trek = (() => {
+  const meter = document.getElementById("alt");
+  if (!meter) return null;
+  const WAYPOINTS = [
+    { name: "Kathmandu", m: 1400, sel: null }, // top of the page
+    { name: "Lukla", m: 2860, sel: "#work" },
+    { name: "Namche Bazaar", m: 3440, sel: "#skills" },
+    { name: "Dingboche", m: 4410, sel: "#play" },
+    { name: "Everest Base Camp", m: 5364, sel: "#path" },
+    { name: "Summit", m: 8849, sel: "#colophon" },
+  ];
+  const LOW = WAYPOINTS[0].m, HIGH = WAYPOINTS[WAYPOINTS.length - 1].m;
+  const stops = document.getElementById("alt-stops");
+  const items = WAYPOINTS.map((w) => {
+    const li = document.createElement("li");
+    li.textContent = w.name;
+    li.style.setProperty("--p", (w.m - LOW) / (HIGH - LOW));
+    stops.append(li);
+    return li;
+  });
+
+  // Scroll positions where each waypoint is reached (when its section's top is 40% down the screen),
+  // forced to strictly increase so the interpolation never divides by zero.
+  const positions = () => {
+    const ys = WAYPOINTS.map((w) => (w.sel ? document.querySelector(w.sel).getBoundingClientRect().top + scrollY - innerHeight * 0.4 : 0));
+    for (let i = 1; i < ys.length; i++) ys[i] = Math.max(ys[i], ys[i - 1] + 1);
+    return ys;
+  };
+
+  const altitudeAt = (y, ys) => {
+    if (y <= ys[0]) return LOW;
+    for (let i = 1; i < ys.length; i++) {
+      if (y <= ys[i]) return WAYPOINTS[i - 1].m + ((y - ys[i - 1]) / (ys[i] - ys[i - 1])) * (WAYPOINTS[i].m - WAYPOINTS[i - 1].m);
+    }
+    return HIGH;
+  };
+
+  const update = (y = scrollY) => {
+    const alt = altitudeAt(y, positions());
+    let here = 0;
+    WAYPOINTS.forEach((w, i) => { if (alt >= w.m - 0.5) here = i; });
+    document.getElementById("alt-m").textContent = Math.round(alt).toLocaleString("en-US");
+    document.getElementById("alt-name").textContent = WAYPOINTS[here].name;
+    document.getElementById("alt-cat").style.setProperty("--p", (alt - LOW) / (HIGH - LOW));
+    items.forEach((li, i) => li.classList.toggle("passed", i <= here));
+  };
+
+  let queued = false;
+  const onScroll = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; update(); });
+  };
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", onScroll);
+  meter.hidden = false;
+  update();
+  return { update };
+})();

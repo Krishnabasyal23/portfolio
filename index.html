@@ -373,6 +373,15 @@
   <p>Hand-built in plain HTML, CSS and SVG. Inspired by Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs; no sacred imagery is depicted.</p>
 </footer>
 
+<!-- Altitude meter: scroll position mapped onto a trek from Kathmandu to the summit. Decorative, so hidden from screen readers. -->
+<aside class="alt" id="alt" aria-hidden="true" hidden>
+  <p class="alt-read"><b id="alt-m">1,400</b> m <span id="alt-name">Kathmandu</span></p>
+  <div class="alt-track" id="alt-track">
+    <ol class="alt-stops" id="alt-stops"></ol>
+    <svg class="cat alt-cat" id="alt-cat"><use href="#cat"/></svg>
+  </div>
+</aside>
+
 <!-- Passport: stamps collected by exploring. Filled and shown by script.js. -->
 <button class="pp-btn" id="pp-btn" type="button" aria-expanded="false" aria-controls="pp-panel" hidden>
   <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2.5" width="14" height="19" rx="1.5"/><circle cx="12" cy="10" r="3.2"/><path d="M8.5 17h7"/></svg>
