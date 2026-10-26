@@ -7,8 +7,10 @@ if (pending.length) {
   document.documentElement.classList.add("armed");
   const reveal = () => {
     const limit = innerHeight * 0.88;
+    // At the very bottom (or when the whole page fits on screen) nothing more can scroll into range, so open everything.
+    const atEnd = scrollY + innerHeight >= document.documentElement.scrollHeight - 2;
     pending = pending.filter((el) => {
-      if (el.getBoundingClientRect().top >= limit) return true;
+      if (!atEnd && el.getBoundingClientRect().top >= limit) return true;
       el.classList.add("in");
       return false;
     });

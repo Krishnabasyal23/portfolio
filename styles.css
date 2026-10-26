@@ -280,3 +280,5 @@ footer p { max-width: 640px; margin: 0 auto; }
   box-shadow: inset 0 0 0 2px #b3231a, inset 0 0 0 4px #f6e9c8, 0 1px 3px rgba(0, 0, 0, .3); opacity: .92; }
 
 .top nav a[aria-current] { color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+.section-title + .panel { margin-top: 34px; }
