@@ -537,15 +537,30 @@ const trek = (() => {
     items.forEach((li, i) => li.classList.toggle("passed", i <= here));
   };
 
+  // The meter is optional and off by default. The choice is remembered in localStorage when it is available.
+  const KEY = "portfolio-trek";
+  const boxes = ["opt-trek", "opt-trek-foot"].map((id) => document.getElementById(id)).filter(Boolean);
+  let on = false;
+  try { on = localStorage.getItem(KEY) === "1"; } catch { /* storage blocked: stays off */ }
+  const apply = () => {
+    meter.hidden = !on;
+    boxes.forEach((b) => { b.checked = on; });
+    if (on) update();
+  };
+  boxes.forEach((b) => b.addEventListener("change", () => {
+    on = b.checked;
+    try { localStorage.setItem(KEY, on ? "1" : "0"); } catch { /* ignore */ }
+    apply();
+  }));
+
   let queued = false;
   const onScroll = () => {
-    if (queued) return;
+    if (!on || queued) return;
     queued = true;
     requestAnimationFrame(() => { queued = false; update(); });
   };
   addEventListener("scroll", onScroll, { passive: true });
   addEventListener("resize", onScroll);
-  meter.hidden = false;
-  update();
+  apply();
   return { update };
 })();

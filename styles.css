@@ -350,3 +350,9 @@ footer p { max-width: 640px; margin: 0 auto; }
   .alt-stops li.passed::before { background: var(--gold); border-color: var(--gold); }
   .alt-cat { position: absolute; left: 22px; bottom: calc(var(--p, 0) * (100% - 26px)); width: 26px; height: 26px; transform: translateX(-4px); }
 }
+
+/* opt-in switches for optional extras */
+.opt { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.opt input { width: 16px; height: 16px; accent-color: var(--vermilion); }
+.pp .opt { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--gold-dim); color: #4a3a2c; }
+.clock .opt { color: var(--gold); }
