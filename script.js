@@ -454,12 +454,17 @@ const passport = (() => {
   const setOpen = (open) => {
     panel.hidden = !open;
     btn.setAttribute("aria-expanded", String(open));
-    if (open) $("pp-title").focus(); else btn.focus();
+    if (open) {
+      $("pp-title").focus();
+      if (!$("pp-visa").hidden) $("pp-visa").scrollIntoView({ block: "nearest" }); // bring the finale into view
+    } else btn.focus();
   };
   btn.addEventListener("click", () => setOpen(panel.hidden));
   $("pp-close").addEventListener("click", () => setOpen(false));
   addEventListener("keydown", (e) => { if (e.key === "Escape" && !panel.hidden) setOpen(false); });
   document.addEventListener("stamp", (e) => award(e.detail));
+  // The visa points at the real contact links in the colophon; the portal script handles the jump.
+  $("pp-contact").addEventListener("click", () => { panel.hidden = true; btn.setAttribute("aria-expanded", "false"); });
 
   // Stamps that depend on how far the visitor has scrolled.
   const check = () => {
