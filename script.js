@@ -1,15 +1,25 @@
-// Scroll reveal only. Without JS (or without IntersectionObserver) everything is simply visible.
-if ("IntersectionObserver" in window) {
+// Scroll reveal. Panels unroll once their top edge is near the bottom of the screen.
+// This checks scroll position instead of using IntersectionObserver, because a panel that is
+// clipped to nothing before it unrolls can be reported as not visible and would never open.
+// Without JS everything is simply visible, because the hidden state only exists under .armed.
+let pending = [...document.querySelectorAll(".reveal")];
+if (pending.length) {
   document.documentElement.classList.add("armed");
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      if (e.isIntersecting) {
-        e.target.classList.add("in");
-        io.unobserve(e.target);
-      }
+  const reveal = () => {
+    const limit = innerHeight * 0.88;
+    pending = pending.filter((el) => {
+      if (el.getBoundingClientRect().top >= limit) return true;
+      el.classList.add("in");
+      return false;
+    });
+    if (!pending.length) {
+      removeEventListener("scroll", reveal);
+      removeEventListener("resize", reveal);
     }
-  }, { threshold: 0.12 });
-  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  };
+  addEventListener("scroll", reveal, { passive: true });
+  addEventListener("resize", reveal);
+  reveal();
 }
 
 // The plate cat's pupils look toward the pointer, moving at most 1.6 drawing units.
