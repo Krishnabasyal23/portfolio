@@ -157,3 +157,54 @@ if ("IntersectionObserver" in window && navLinks.length) {
   }, { rootMargin: "-40% 0px -55% 0px" });
   navLinks.forEach((a) => { const t = document.querySelector(a.getAttribute("href")); if (t && t.tagName === "SECTION") spy.observe(t); });
 }
+
+// Portal jump. Clicking an in-page link opens a spark ring at the link, jumps to the section while
+// the ring is open, then dissolves it at the destination. Skipped when the visitor prefers reduced
+// motion, and any click with a modifier key keeps the normal browser behaviour.
+const portal = document.getElementById("portal");
+const calm = matchMedia("(prefers-reduced-motion: reduce)");
+let jumping = false;
+
+const burst = (x, y) => {
+  for (let i = 0; i < 16; i++) {
+    const spark = document.createElement("i");
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 60 + Math.random() * 90;
+    spark.className = "spark";
+    spark.style.cssText = `left:${x - 3}px;top:${y - 3}px;--dx:${Math.cos(angle) * dist}px;--dy:${Math.sin(angle) * dist}px`;
+    portal.append(spark);
+    spark.addEventListener("animationend", () => spark.remove());
+    setTimeout(() => spark.remove(), 900); // fallback if a browser skips the event
+  }
+};
+
+const showRing = (x, y, phase) => {
+  portal.style.left = x + "px";
+  portal.style.top = y + "px";
+  portal.className = `portal on ${phase}`;
+  burst(0, 0);
+};
+
+if (portal) {
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const id = link.getAttribute("href");
+      const target = id.length > 1 && document.querySelector(id);
+      if (!target || link.classList.contains("skip") || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
+      if (calm.matches) return;
+      e.preventDefault();
+      if (jumping) return;
+      jumping = true;
+      const box = link.getBoundingClientRect();
+      showRing(box.left + box.width / 2, box.top + box.height / 2, "open");
+      setTimeout(() => {
+        target.scrollIntoView({ behavior: "instant" });
+        history.pushState(null, "", id);
+        target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+        showRing(innerWidth / 2, innerHeight * 0.4, "close");
+        setTimeout(() => { portal.className = "portal"; jumping = false; }, 420);
+      }, 330);
+    });
+  });
+}

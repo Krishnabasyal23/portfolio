@@ -18,3 +18,4 @@
 - 2026-10-26 Falling petals, swaying flags and lanterns all stop under prefers-reduced-motion; the branch and lanterns are hidden on narrow screens.
 - 2026-10-26 The red seal reads 验 (verify), tying the "don't trust, verify" theme to the scroll motif. Its font is loaded with a text= subset so only that one glyph is downloaded.
 - 2026-10-26 404 page keeps its styles inline because GitHub Pages serves it at any path, where relative links to styles.css would break.
+- 2026-10-26 Section links open a portal ring (orange spark rings, original artwork) at the click, jump while it is open, then dissolve it at the destination. It is skipped for reduced motion and modifier-clicks, ignores clicks mid-animation, and moves focus to the target so keyboard users land in the right place. No film names, logos or artwork are used.
