@@ -42,7 +42,24 @@ a { color: inherit; }
 .top nav a:hover { color: var(--gold); }
 
 /* sky: sunrise glow behind the flags, hero and ridge */
-.sky { position: relative; padding-top: 52px; background: linear-gradient(180deg, var(--deep) 0%, var(--deep) 40%, #7a1a12 80%, #c0452a 100%); }
+/* the sky follows the visitor's local time: night, dawn, day (default) or dusk. Bright colours stay in the bottom
+   quarter so the hero text keeps its contrast. */
+.sky { --g0: #4a0f0b; --g1: #4a0f0b; --g2: #7a1a12; --g3: #c0452a; position: relative; padding-top: 52px;
+  background-image: var(--stars, linear-gradient(transparent, transparent)), linear-gradient(180deg, var(--g0) 0%, var(--g1) 40%, var(--g2) 80%, var(--g3) 100%); }
+[data-sky="dawn"] .sky { --g0: #3a0f2b; --g1: #5a1230; --g2: #8a2a3a; --g3: #e0764a; }
+[data-sky="dusk"] .sky { --g0: #2a1033; --g1: #4a1a45; --g2: #7a2a4a; --g3: #d8643a; }
+[data-sky="night"] .sky { --g0: #0b0a20; --g1: #14123a; --g2: #2a1745; --g3: #5a2a55;
+  --stars: radial-gradient(1.6px 1.6px at 12% 18%, #fff 50%, transparent 52%), radial-gradient(1.2px 1.2px at 27% 8%, #fff 50%, transparent 52%),
+    radial-gradient(1.8px 1.8px at 41% 22%, #ffe9a8 50%, transparent 52%), radial-gradient(1.2px 1.2px at 58% 12%, #fff 50%, transparent 52%),
+    radial-gradient(1.6px 1.6px at 73% 26%, #fff 50%, transparent 52%), radial-gradient(1.2px 1.2px at 88% 10%, #ffe9a8 50%, transparent 52%),
+    radial-gradient(1.4px 1.4px at 6% 44%, #fff 50%, transparent 52%), radial-gradient(1.2px 1.2px at 95% 40%, #fff 50%, transparent 52%),
+    radial-gradient(1.4px 1.4px at 34% 52%, #fff 50%, transparent 52%), radial-gradient(1.2px 1.2px at 66% 48%, #ffe9a8 50%, transparent 52%); }
+
+/* kathmandu clock in the footer */
+.clock { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 0 auto 14px; font-size: 14px; }
+.clock time { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--parchment); }
+.linklike { padding: 0; font: inherit; color: var(--gold); background: none; border: 0; border-bottom: 1px dotted var(--gold); cursor: pointer; }
+.linklike:hover { color: var(--parchment); }
 
 /* prayer flags: blue, white, red, green, yellow, repeated along a string */
 .flags {

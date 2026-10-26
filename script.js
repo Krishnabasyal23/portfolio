@@ -345,3 +345,39 @@ if (portalFx) {
     });
   });
 }
+
+// Kathmandu clock and living sky. Nepal is fixed at UTC+5:45 with no daylight saving, so the offset is a constant.
+(() => {
+  const clock = document.getElementById("clock");
+  if (!clock) return;
+  const KTM_OFFSET_MIN = 345;
+  const timeEl = document.getElementById("ktm-time");
+  const diffEl = document.getElementById("ktm-diff");
+  const skyBtn = document.getElementById("sky-btn");
+  const skyName = document.getElementById("sky-name");
+  const fmt = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kathmandu", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+  const SKIES = ["night", "dawn", "day", "dusk"];
+  let previewing = false;
+
+  const skyFor = (hour) => (hour < 5 || hour >= 20 ? "night" : hour < 8 ? "dawn" : hour < 17 ? "day" : "dusk");
+  const setSky = (name) => { document.documentElement.dataset.sky = name; skyName.textContent = name; };
+
+  const tick = () => {
+    const now = new Date();
+    timeEl.textContent = fmt.format(now);
+    const mins = KTM_OFFSET_MIN + now.getTimezoneOffset(); // Kathmandu minus the visitor, in minutes
+    const h = Math.floor(Math.abs(mins) / 60), m = Math.abs(mins) % 60;
+    diffEl.textContent = mins === 0 ? "the same time as you"
+      : `${h ? h + "h " : ""}${m ? m + "m " : ""}${mins > 0 ? "ahead of" : "behind"} you`;
+    if (!previewing) setSky(skyFor(now.getHours()));
+  };
+
+  skyBtn.addEventListener("click", () => {
+    previewing = true;
+    setSky(SKIES[(SKIES.indexOf(document.documentElement.dataset.sky) + 1) % SKIES.length]);
+  });
+
+  clock.hidden = false;
+  tick();
+  setInterval(tick, 1000);
+})();
