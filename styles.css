@@ -334,13 +334,13 @@ footer p { max-width: 640px; margin: 0 auto; }
 .pp h2:focus { outline: none; }
 
 /* altitude meter: a full trail on wide screens, a small readout pill on narrow ones */
-.alt { position: fixed; z-index: 11; left: 12px; bottom: 16px; padding: 8px 14px; color: var(--parchment); background: rgba(42, 9, 7, .88); border: 2px solid var(--gold-dim); border-radius: 999px; font-size: 13px; pointer-events: none; }
+.trek { position: fixed; z-index: 11; left: 12px; bottom: 16px; padding: 8px 14px; color: var(--parchment); background: rgba(42, 9, 7, .88); border: 2px solid var(--gold-dim); border-radius: 999px; font-size: 13px; pointer-events: none; }
 .alt-read { margin: 0; }
 .alt-read b { font-variant-numeric: tabular-nums; color: var(--gold); }
 .alt-read span { margin-left: 4px; opacity: .85; }
 .alt-track { display: none; }
 @media (min-width: 1360px) {
-  .alt { left: 18px; top: 50%; bottom: auto; transform: translateY(-50%); width: 178px; padding: 12px 12px 14px; border-radius: 8px; }
+  .trek { left: 18px; top: 50%; bottom: auto; transform: translateY(-50%); width: 178px; padding: 12px 12px 14px; border-radius: 8px; }
   .alt-read span { display: block; margin: 2px 0 0; font-size: 12px; }
   .alt-track { display: block; position: relative; height: min(42vh, 360px); margin: 12px 0 0 14px; border-left: 2px dashed var(--gold-dim); }
   .alt-stops { position: absolute; inset: 0; margin: 0; padding: 0; list-style: none; }
