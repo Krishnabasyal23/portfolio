@@ -130,3 +130,18 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
   }
   document.body.append(layer);
 }
+
+// Mark the nav link for the section nearest the middle of the screen.
+const navLinks = [...document.querySelectorAll(".top nav a")];
+if ("IntersectionObserver" in window && navLinks.length) {
+  const spy = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      for (const a of navLinks) {
+        if (a.getAttribute("href") === "#" + e.target.id) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      }
+    }
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  navLinks.forEach((a) => { const t = document.querySelector(a.getAttribute("href")); if (t && t.tagName === "SECTION") spy.observe(t); });
+}
