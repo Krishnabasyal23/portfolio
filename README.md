@@ -30,4 +30,6 @@ The site is static, so any static host works. These steps use GitHub Pages.
 2. At the domain registrar, add a `CNAME` record from `www` to `<username>.github.io`. For a bare domain without `www`, use the four A records listed in the GitHub Pages documentation instead.
 3. Back in the Pages settings, enter the domain and turn on "Enforce HTTPS" once the certificate is issued, which can take up to a day.
 
+The social preview tags in `index.html` point at `og.png` with a relative path, which link-preview crawlers ignore. After the domain is live, change the `og:image` content to the full address, such as `https://www.example.com.np/og.png`.
+
 If the registrar does not allow DNS records, change the domain's nameservers to a DNS provider that does and set the records there.
