@@ -5,6 +5,7 @@
   --gold-dim: #b88a2e;
   --parchment: #f3e6c8;
   --ink: #2a1810;
+  --paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .1 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"), radial-gradient(ellipse at 50% 40%, #f6ebd0 55%, #e0c994 100%);
   --indigo: #1f2f5c;
   --green: #2f6b57;
   --serif: "Fraunces", Georgia, serif;
@@ -120,9 +121,7 @@ h1 { margin: 4px 0 14px; font: 700 clamp(48px, 9vw, 88px)/1 var(--serif); color:
   display: grid; grid-template-columns: 56px 1fr 190px; gap: 24px;
   margin-bottom: 52px; padding: 30px 28px;
   color: var(--ink);
-  background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .1 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse at 50% 40%, #f6ebd0 55%, #e0c994 100%);
+  background: var(--paper);
   border: 4px double var(--gold-dim);
   outline: 3px solid var(--vermilion); outline-offset: -11px;
   box-shadow: inset 0 0 50px rgba(120, 80, 30, .35), 0 10px 30px rgba(0, 0, 0, .4);
@@ -303,3 +302,32 @@ footer p { max-width: 640px; margin: 0 auto; }
 /* portal jump: a full-screen canvas that is only shown (and only catches input) while the effect runs */
 .portal { display: none; position: fixed; inset: 0; width: 100%; height: 100%; z-index: 30; touch-action: none; cursor: progress; }
 .portal.on { display: block; }
+
+/* passport: a floating button opens a booklet page of stamps earned by exploring the site */
+.pp-btn { position: fixed; right: 16px; bottom: 16px; z-index: 12; display: flex; align-items: center; gap: 8px; padding: 10px 16px; font: 500 14px var(--sans); color: var(--parchment); background: var(--vermilion); border: 2px solid var(--gold); border-radius: 999px; cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, .45); }
+.pp-btn svg { width: 18px; height: 18px; }
+.pp-btn.pulse { animation: pp-pulse .8s ease 2; }
+@keyframes pp-pulse { 50% { transform: scale(1.08); box-shadow: 0 0 0 8px rgba(226, 176, 74, .35); } }
+.pp { position: fixed; right: 16px; bottom: 70px; z-index: 13; width: min(360px, calc(100vw - 32px)); max-height: min(78vh, 640px); overflow: auto; padding: 24px 20px 20px; color: var(--ink); background: var(--paper); border: 4px double var(--gold-dim); outline: 3px solid var(--vermilion); outline-offset: -11px; box-shadow: inset 0 0 50px rgba(120, 80, 30, .35), 0 14px 40px rgba(0, 0, 0, .5); }
+.pp-close { position: absolute; top: 10px; right: 14px; padding: 2px 8px; font: 24px/1 var(--sans); color: var(--vermilion); background: none; border: 0; cursor: pointer; }
+.pp-kicker { margin: 0; font: 20px var(--dev); color: var(--vermilion); }
+.pp h2 { margin: 0; font: 700 26px/1.2 var(--serif); }
+.pp-sub { margin: 4px 0 0; font-size: 14px; color: #4a3a2c; }
+.pp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; margin: 16px 0 0; padding: 0; list-style: none; }
+.pp-stamp { text-align: center; font-size: 12px; line-height: 1.35; color: #4a3a2c; }
+.pp-mark { display: grid; place-items: center; aspect-ratio: 1; margin-bottom: 4px; border: 3px dashed #a8987c; border-radius: 50%; color: #8a7a62; font: 700 22px var(--serif); }
+.pp-stamp.got .pp-mark { border: 4px double var(--c); color: var(--c); transform: rotate(var(--r)); background: rgba(255, 255, 255, .15); font: 700 11px/1.1 var(--serif); letter-spacing: .08em; text-transform: uppercase; }
+.pp-mark span { padding: 3px 4px; border-block: 2px solid; }
+.pp-stamp strong { display: block; color: var(--ink); }
+.pp-visa { margin-top: 18px; text-align: center; border-top: 1px solid var(--gold-dim); padding-top: 16px; }
+.pp-visa .big { display: inline-block; padding: 8px 18px; color: #1f5a45; font: 700 22px/1.1 var(--serif); letter-spacing: .1em; text-transform: uppercase; border: 4px double currentColor; transform: rotate(-6deg); }
+.pp-visa p { margin: 14px 0 12px; }
+.pp-visa .links { justify-content: center; }
+.pp-toast { position: fixed; left: 50%; bottom: 76px; z-index: 14; padding: 10px 18px; font-size: 14px; color: var(--parchment); background: var(--ink); border: 2px solid var(--gold); border-radius: 6px; opacity: 0; transform: translate(-50%, 16px); transition: opacity .3s, transform .3s; pointer-events: none; }
+.pp-toast.show { opacity: 1; transform: translate(-50%, 0); }
+.plate svg[role="button"] { cursor: pointer; }
+.plate svg.petted { animation: hop .45s ease; }
+@keyframes hop { 40% { transform: translateY(-8px) rotate(-2deg); } }
+@media (max-width: 760px) { .pp { right: 12px; bottom: 66px; } }
+@media (prefers-reduced-motion: reduce) { .pp-btn.pulse, .plate svg.petted { animation: none; } .pp-toast { transition: none; } }
+.pp h2:focus { outline: none; }

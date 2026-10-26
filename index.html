@@ -339,7 +339,7 @@
         </p>
       </div>
       <figure class="plate">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Engraving of a seated cat whose eyes follow the pointer">
+        <svg viewBox="0 0 120 120" role="button" tabindex="0" aria-label="Engraving of a seated cat whose eyes follow the pointer. Activate to pet it.">
           <rect x="3" y="3" width="114" height="114" fill="none" stroke="#2a1810" stroke-width="1.5"/>
           <rect x="7" y="7" width="106" height="106" fill="none" stroke="#b88a2e" stroke-width="1"/>
           <use href="#cat" x="10" y="10" width="100" height="100" style="color:#2a1810;--cat-fill:url(#hatch)"/>
@@ -372,6 +372,28 @@
   </p>
   <p>Hand-built in plain HTML, CSS and SVG. Inspired by Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs; no sacred imagery is depicted.</p>
 </footer>
+
+<!-- Passport: stamps collected by exploring. Filled and shown by script.js. -->
+<button class="pp-btn" id="pp-btn" type="button" aria-expanded="false" aria-controls="pp-panel" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2.5" width="14" height="19" rx="1.5"/><circle cx="12" cy="10" r="3.2"/><path d="M8.5 17h7"/></svg>
+  <span>Passport <b id="pp-count">0</b>/6</span>
+</button>
+<aside class="pp" id="pp-panel" role="dialog" aria-labelledby="pp-title" hidden>
+  <button class="pp-close" id="pp-close" type="button" aria-label="Close passport">&times;</button>
+  <p class="pp-kicker">राहदानी</p>
+  <h2 id="pp-title" tabindex="-1">Passport</h2>
+  <p class="pp-sub">Stamps are earned by exploring this site. They are saved only in your browser.</p>
+  <ul class="pp-grid" id="pp-grid"></ul>
+  <div class="pp-visa" id="pp-visa" hidden>
+    <span class="big">Visa approved</span>
+    <p>You explored the whole portfolio. Let's talk.</p>
+    <p class="links">
+      <a href="https://github.com/Krishnabasyal23" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/krishna-bashyal-a7a3aa329/" rel="noopener">LinkedIn</a>
+    </p>
+  </div>
+</aside>
+<div class="pp-toast" id="pp-toast" role="status"></div>
 
 <!-- Portal effect for in-page jumps: one full-screen canvas drawn by script.js. -->
 <canvas class="portal" id="portal" aria-hidden="true"></canvas>

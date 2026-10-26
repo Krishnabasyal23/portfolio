@@ -104,6 +104,7 @@ if (pupils.length) {
     out.disabled = true;
     rounds += 1;
     $("rounds").textContent = rounds;
+    document.dispatchEvent(new CustomEvent("stamp", { detail: "play" }));
     $("secret").textContent = secret;
     $("reveal").hidden = false;
     // Re-derive everything from the revealed secret, the same check a visitor could do by hand.
@@ -341,6 +342,7 @@ if (portalFx) {
         history.pushState(null, "", id);
         target.setAttribute("tabindex", "-1");
         target.focus({ preventScroll: true });
+        document.dispatchEvent(new CustomEvent("stamp", { detail: "portal" }));
       });
     });
   });
@@ -380,4 +382,108 @@ if (portalFx) {
   clock.hidden = false;
   tick();
   setInterval(tick, 1000);
+})();
+
+// Passport. Features announce progress with a "stamp" event; this file decides which stamps exist, saves them
+// in localStorage (wrapped in try/catch because it can be blocked) and shows them.
+const passport = (() => {
+  const $ = (id) => document.getElementById(id);
+  const btn = $("pp-btn"), panel = $("pp-panel");
+  if (!btn || !panel) return null;
+  const STAMPS = [
+    { id: "arrive", label: "Arrived", hint: "Open the site", color: "#1f5a45", tilt: "-7deg" },
+    { id: "work", label: "Inspected", hint: "See all five projects", color: "#9b2218", tilt: "5deg" },
+    { id: "portal", label: "Portal", hint: "Jump to a section", color: "#a34a12", tilt: "-4deg" },
+    { id: "play", label: "Played", hint: "Finish a round of Pocket Catino", color: "#1f2f5c", tilt: "6deg" },
+    { id: "cat", label: "Purred", hint: "Pet the cat in the colophon", color: "#6b3a8a", tilt: "-6deg" },
+    { id: "reach", label: "Reached", hint: "Scroll down to the colophon", color: "#6b4f0e", tilt: "4deg" },
+  ];
+  let got = {};
+  try { got = JSON.parse(localStorage.getItem("portfolio-passport")) || {}; } catch { /* storage blocked: stamps last this visit only */ }
+  const count = () => STAMPS.filter((s) => got[s.id]).length;
+  let toastTimer;
+
+  const say = (text) => {
+    const toast = $("pp-toast");
+    toast.textContent = text;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+  };
+
+  const render = () => {
+    const grid = $("pp-grid");
+    grid.replaceChildren();
+    for (const s of STAMPS) {
+      const li = document.createElement("li");
+      li.className = "pp-stamp" + (got[s.id] ? " got" : "");
+      li.style.setProperty("--c", s.color);
+      li.style.setProperty("--r", s.tilt);
+      const mark = document.createElement("div");
+      mark.className = "pp-mark";
+      mark.setAttribute("aria-hidden", "true");
+      if (got[s.id]) { const t = document.createElement("span"); t.textContent = s.label; mark.append(t); } else mark.textContent = "?";
+      const text = document.createElement("div");
+      if (got[s.id]) {
+        const name = document.createElement("strong");
+        name.textContent = s.label;
+        const when = new Date(got[s.id]).toLocaleDateString(undefined, { day: "numeric", month: "short" });
+        text.append(name, when);
+      } else text.textContent = s.hint;
+      li.append(mark, text);
+      grid.append(li);
+    }
+    $("pp-count").textContent = count();
+    $("pp-visa").hidden = count() < STAMPS.length;
+  };
+
+  const award = (id) => {
+    const stamp = STAMPS.find((s) => s.id === id);
+    if (!stamp || got[id]) return;
+    got[id] = new Date().toISOString();
+    try { localStorage.setItem("portfolio-passport", JSON.stringify(got)); } catch { /* ignore */ }
+    render();
+    say(count() === STAMPS.length ? "Visa approved! Open your passport." : `New stamp: ${stamp.label}`);
+    btn.classList.remove("pulse");
+    void btn.offsetWidth; // restart the pulse animation
+    btn.classList.add("pulse");
+  };
+
+  const setOpen = (open) => {
+    panel.hidden = !open;
+    btn.setAttribute("aria-expanded", String(open));
+    if (open) $("pp-title").focus(); else btn.focus();
+  };
+  btn.addEventListener("click", () => setOpen(panel.hidden));
+  $("pp-close").addEventListener("click", () => setOpen(false));
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && !panel.hidden) setOpen(false); });
+  document.addEventListener("stamp", (e) => award(e.detail));
+
+  // Stamps that depend on how far the visitor has scrolled.
+  const check = () => {
+    if (document.querySelectorAll("#work .panel.in").length >= 5) award("work");
+    const end = document.getElementById("colophon");
+    if (end && end.getBoundingClientRect().top < innerHeight * 0.7) award("reach");
+  };
+  addEventListener("scroll", check, { passive: true });
+
+  // Petting the cat on the bestiary plate.
+  const plate = document.querySelector(".plate svg");
+  if (plate) {
+    const pet = () => {
+      plate.classList.remove("petted");
+      void plate.getBoundingClientRect();
+      plate.classList.add("petted");
+      say("Purr.");
+      award("cat");
+    };
+    plate.addEventListener("click", pet);
+    plate.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pet(); } });
+  }
+
+  btn.hidden = false;
+  render();
+  setTimeout(() => award("arrive"), 900);
+  check();
+  return { award, say };
 })();
