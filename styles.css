@@ -82,8 +82,20 @@ a { color: inherit; }
 .mandala .petals use { fill: var(--indigo); stroke: var(--gold); stroke-width: 1.5; }
 .mandala .core { fill: var(--gold); }
 .mandala .glyph { font: 64px var(--dev); fill: var(--deep); }
-.mandala .spin { transform-origin: center; animation: spin 120s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* The mandala stays put. Movement comes from a gold glimmer that travels around the petals and a slow march of the
+   bead ring. Neither uses a transform, so nothing can swing off-centre in a browser that resolves transform-origin differently. */
+.mandala .dots { animation: march 40s linear infinite; }
+@keyframes march { to { stroke-dashoffset: -216; } }
+.mandala .petals-lg use { animation: glimmer 6s ease-in-out infinite; }
+.mandala .petals use { animation: glimmer 6s ease-in-out infinite; }
+.mandala .petals-lg use:nth-child(2), .mandala .petals use:nth-child(2) { animation-delay: .75s; }
+.mandala .petals-lg use:nth-child(3), .mandala .petals use:nth-child(3) { animation-delay: 1.5s; }
+.mandala .petals-lg use:nth-child(4), .mandala .petals use:nth-child(4) { animation-delay: 2.25s; }
+.mandala .petals-lg use:nth-child(5), .mandala .petals use:nth-child(5) { animation-delay: 3s; }
+.mandala .petals-lg use:nth-child(6), .mandala .petals use:nth-child(6) { animation-delay: 3.75s; }
+.mandala .petals-lg use:nth-child(7), .mandala .petals use:nth-child(7) { animation-delay: 4.5s; }
+.mandala .petals-lg use:nth-child(8), .mandala .petals use:nth-child(8) { animation-delay: 5.25s; }
+@keyframes glimmer { 0%, 70%, 100% { stroke: var(--gold); stroke-width: 1.5; } 85% { stroke: #fff2c4; stroke-width: 3; } }
 
 .kicker { margin: 0; color: var(--gold); font: 22px var(--dev); }
 h1 { margin: 4px 0 14px; font: 700 clamp(48px, 9vw, 88px)/1 var(--serif); color: var(--parchment); }
@@ -175,7 +187,7 @@ footer p { max-width: 640px; margin: 0 auto; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .mandala .spin { animation: none; }
+  .mandala .dots, .mandala .petals-lg use, .mandala .petals use { animation: none; }
   .armed .reveal { transition: none; }
 }
 
