@@ -180,6 +180,7 @@ const portalFx = (() => {
 
   // Size of the ring, how much of it is drawn, how orange the whole screen is, and overall opacity at time t.
   const shape = (ms) => {
+    ms = Math.max(0, ms);
     if (ms < BUILD) return { R: baseR * easeOut(ms / BUILD), reveal: easeInOut(clamp01(ms / 900)), wash: 0, alpha: 1 };
     if (ms < HOLD) return { R: baseR * (1 + 0.04 * Math.sin(ms / 60)), reveal: 1, wash: 0.12 * ((ms - BUILD) / (HOLD - BUILD)), alpha: 1 };
     if (ms < SWALLOW) {
@@ -279,7 +280,7 @@ const portalFx = (() => {
 
   const frame = (now) => {
     if (!fx.running) return;
-    const dt = Math.min(50, now - last);
+    const dt = Math.max(0, Math.min(50, now - last)); // rAF timestamps can be a hair behind performance.now()
     last = now;
     t += dt;
     step(dt);
