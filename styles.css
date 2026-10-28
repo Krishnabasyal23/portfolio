@@ -37,7 +37,8 @@ a { color: inherit; }
   border-bottom: 2px solid var(--gold-dim);
   backdrop-filter: blur(4px);
 }
-.mark { font: 28px var(--dev); text-decoration: none; color: var(--gold); }
+.mark { display: block; text-decoration: none; color: var(--gold); }
+.mark .cat { width: 34px; height: 34px; }
 .top nav { display: flex; gap: 22px; }
 .top nav a { text-decoration: none; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
 .top nav a:hover { color: var(--gold); }
@@ -81,7 +82,6 @@ a { color: inherit; }
 .mandala .petals-lg use { fill: var(--vermilion); stroke: var(--gold); stroke-width: 1.5; }
 .mandala .petals use { fill: var(--indigo); stroke: var(--gold); stroke-width: 1.5; }
 .mandala .core { fill: var(--gold); }
-.mandala .glyph { font: 64px var(--dev); fill: var(--deep); }
 /* The mandala stays put. Movement comes from a gold glimmer that travels around the petals and a slow march of the
    bead ring. Neither uses a transform, so nothing can swing off-centre in a browser that resolves transform-origin differently. */
 .mandala .dots { animation: march 40s linear infinite; }
