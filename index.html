@@ -19,10 +19,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Tiro+Devanagari+Hindi&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&text=%E9%AA%8C&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+<script>
+  // First visit only: decide before the page paints whether to show the curtain intro. Skipped when the visitor prefers reduced motion.
+  try { if (!localStorage.getItem("portfolio-intro") && !matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("has-intro"); } catch (e) { /* storage blocked: no intro */ }
+</script>
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
 
+<!-- First-visit intro: curtains open on a scroll held by the cat. Shown only when the head script adds the "has-intro" class. -->
+<div class="curtain-intro" id="intro">
+  <div class="curtain l"></div>
+  <div class="curtain r"></div>
+  <div class="intro-scroll">
+    <svg class="cat" viewBox="0 0 100 100" aria-hidden="true"><use href="#cat"/></svg>
+    <p class="intro-k">Hello, thanks for visiting. I hope you brought treats.</p>
+    <p class="intro-t">Please have a look around and meet my master, Krishna.</p>
+  </div>
+  <button class="intro-skip" id="intro-skip" type="button">Skip</button>
+</div>
 
 <!-- Shared drawings: one engraved-style cat reused with <use>, plus a hatching pattern for plates -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">

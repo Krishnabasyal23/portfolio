@@ -821,3 +821,20 @@ const trek = (() => {
   syncHang();
 })();
 
+// First-visit intro. The head script adds the "intro" class only when it has not been seen; this runs it, and
+// remembers in localStorage (when available) that it was shown so it does not repeat.
+(() => {
+  const el = document.getElementById("intro");
+  if (!el || !document.documentElement.classList.contains("has-intro")) return;
+  let done = false;
+  const finish = () => {
+    if (done) return;
+    done = true;
+    el.classList.add("open");
+    try { localStorage.setItem("portfolio-intro", "1"); } catch { /* ignore */ }
+    setTimeout(() => { document.documentElement.classList.remove("has-intro"); el.classList.remove("open"); }, 800);
+  };
+  document.getElementById("intro-skip").addEventListener("click", finish);
+  addEventListener("keydown", (e) => { if (e.key === "Escape") finish(); });
+  setTimeout(finish, 2800);
+})();
