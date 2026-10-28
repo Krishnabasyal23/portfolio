@@ -168,7 +168,7 @@ const portalFx = (() => {
   if (!portalCanvas) return null;
   const ctx = portalCanvas.getContext("2d");
   // Timeline in milliseconds: build the ring, hold it, swell over the screen, emerge at the target, fade.
-  const BUILD = 550, HOLD = 800, SWALLOW = 1150, EMERGE = 1450, END = 1700;
+  const BUILD = 1000, HOLD = 1500, SWALLOW = 2100, EMERGE = 2600, END = 3000;
   const TAU = Math.PI * 2;
   const easeOut = (x) => 1 - (1 - x) ** 3;
   const easeIn = (x) => x ** 3;
@@ -181,7 +181,7 @@ const portalFx = (() => {
   // Size of the ring, how much of it is drawn, how orange the whole screen is, and overall opacity at time t.
   const shape = (ms) => {
     ms = Math.max(0, ms);
-    if (ms < BUILD) return { R: baseR * easeOut(ms / BUILD), reveal: easeInOut(clamp01(ms / (BUILD * 0.9))), wash: 0, alpha: 1 };
+    if (ms < BUILD) return { R: baseR * easeOut(ms / BUILD), reveal: easeInOut(clamp01(ms / 900)), wash: 0, alpha: 1 };
     if (ms < HOLD) return { R: baseR * (1 + 0.04 * Math.sin(ms / 60)), reveal: 1, wash: 0.12 * ((ms - BUILD) / (HOLD - BUILD)), alpha: 1 };
     if (ms < SWALLOW) {
       const k = easeIn((ms - HOLD) / (SWALLOW - HOLD));
@@ -706,48 +706,4 @@ const trek = (() => {
     $("m-time").textContent = SECONDS;
     nextTicket();
   });
-})();
-
-// The cat on the prayer flags. Poking it builds up annoyance, which fades with time. A website cannot close the browser
-// tab, so when the cat has had enough it only covers the page with a "closed" screen that one click undoes.
-(() => {
-  const cat = document.getElementById("flag-cat");
-  const gone = document.getElementById("cat-gone");
-  if (!cat || !gone) return;
-  const say = (t) => { if (typeof passport !== "undefined" && passport) passport.say(t); };
-  const MOODS = [[3, "Mrrp?"], [5, "The cat flicks its tail."], [7, "The cat is not amused."]];
-  const LEAVE_AT = 9;
-  let annoyed = 0, last = performance.now();
-
-  const poke = () => {
-    const now = performance.now();
-    annoyed = Math.max(0, annoyed - (now - last) / 2500) + 1; // calms down by one poke every 2.5 seconds
-    last = now;
-    cat.classList.remove("poked");
-    void cat.getBoundingClientRect();
-    cat.classList.add("poked");
-    if (annoyed >= LEAVE_AT) return leave();
-    const mood = MOODS.filter(([n]) => Math.floor(annoyed) === n)[0];
-    say(mood ? mood[1] : "Purr.");
-  };
-
-  const leave = () => {
-    annoyed = 0;
-    cat.classList.add("fled");
-    setTimeout(() => {
-      gone.hidden = false;
-      gone.querySelector("button").focus();
-    }, 650);
-  };
-  const back = () => {
-    gone.hidden = true;
-    cat.classList.remove("fled", "poked");
-    cat.focus({ preventScroll: true });
-    say("The cat is back, and pretending nothing happened.");
-  };
-
-  cat.addEventListener("click", poke);
-  cat.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); poke(); } });
-  gone.querySelector("button").addEventListener("click", back);
-  addEventListener("keydown", (e) => { if (e.key === "Escape" && !gone.hidden) back(); });
 })();
