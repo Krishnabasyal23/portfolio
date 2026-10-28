@@ -380,3 +380,16 @@ footer p { max-width: 640px; margin: 0 auto; }
 .readout { margin: 0; align-self: start; font-variant-numeric: tabular-nums; font-size: 14px; }
 .momo-stage + .controls { margin-top: 14px; flex-wrap: wrap; }
 @media (max-width: 760px) { .momo-stage { grid-template-columns: 1fr; justify-items: center; } .meter { width: 100%; } }
+
+/* the cat on the flags: pokeable, and it leaves when annoyed */
+.on-string { cursor: pointer; transform-origin: 50% 100%; transition: transform .6s ease-in, opacity .6s; }
+.on-string.poked { animation: cat-poke .4s ease; }
+.on-string.fled { transform: translateY(-140px) rotate(12deg); opacity: 0; animation: none; }
+@keyframes cat-poke { 30% { transform: translateY(-6px) rotate(-4deg); } 60% { transform: translateY(0) rotate(3deg); } }
+.cat-gone { position: fixed; inset: 0; z-index: 40; display: grid; place-content: center; justify-items: center; gap: 10px; padding: 24px; text-align: center; color: var(--ink); background: var(--parchment); }
+.cat-gone[hidden] { display: none; }
+.cat-gone .cat { width: 96px; height: 96px; color: var(--ink); --cat-fill: #e9d6a8; }
+.cat-gone p { margin: 0; font: 700 26px/1.2 var(--serif); }
+.cat-gone .small { max-width: 34ch; font: 15px/1.5 var(--sans); }
+.cat-gone button { margin-top: 8px; padding: 10px 22px; font: 500 15px var(--sans); color: var(--parchment); background: var(--vermilion); border: 2px solid var(--gold-dim); border-radius: 999px; cursor: pointer; }
+@media (prefers-reduced-motion: reduce) { .on-string, .on-string.poked { animation: none; transition: none; } }
