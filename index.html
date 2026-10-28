@@ -100,7 +100,7 @@
     <use href="#blossom" x="74" y="158" width="22" height="22"/>
   </svg>
   <!-- Prayer flags (lungta): blue, white, red, green, yellow -->
-  <div class="flags"><svg class="cat on-string" id="flag-cat" role="button" tabindex="0" aria-label="The cat on the prayer flags. Activate to pet it, but not too much."><use href="#cat"/></svg></div>
+  <div class="flags" aria-hidden="true"><svg class="cat on-string"><use href="#cat"/></svg></div>
 
   <!-- Hero: mandala + intro -->
   <section class="hero">
@@ -407,14 +407,6 @@
     <svg class="cat alt-cat" id="alt-cat"><use href="#cat"/></svg>
   </div>
 </aside>
-
-<!-- Shown when the cat on the flags has been poked too often. A joke: sites cannot really close a tab. -->
-<div class="cat-gone" id="cat-gone" role="dialog" aria-labelledby="cat-gone-title" hidden>
-  <svg class="cat" viewBox="0 0 120 120" aria-hidden="true"><use href="#cat"/></svg>
-  <p id="cat-gone-title">The cat closed this tab.</p>
-  <p class="small">It can't really. Browsers don't allow websites to do that, so it is only pretending.</p>
-  <button type="button">Reopen</button>
-</div>
 
 <!-- Passport: stamps collected by exploring. Filled and shown by script.js. -->
 <button class="pp-btn" id="pp-btn" type="button" aria-expanded="false" aria-controls="pp-panel" hidden>
