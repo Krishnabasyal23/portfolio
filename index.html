@@ -23,6 +23,7 @@
 <body>
 <a class="skip" href="#top">Skip to content</a>
 
+
 <!-- Shared drawings: one engraved-style cat reused with <use>, plus a hatching pattern for plates -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
@@ -63,6 +64,8 @@
     <a href="#path">Experience</a>
     <a href="#colophon">Contact</a>
   </nav>
+  <svg class="cat hang" id="hang-cat" role="button" tabindex="0" aria-label="The cat, hanging upside down from the header. Activate to pet it, but not too much." hidden><use href="#cat"/></svg>
+  <span class="bubble hang-bubble" id="hang-bubble" aria-hidden="true" hidden></span>
 </header>
 
 <main id="top">
@@ -100,7 +103,7 @@
     <use href="#blossom" x="74" y="158" width="22" height="22"/>
   </svg>
   <!-- Prayer flags (lungta): blue, white, red, green, yellow -->
-  <div class="flags" aria-hidden="true"><svg class="cat on-string"><use href="#cat"/></svg></div>
+  <div class="flags"><svg class="cat on-string" id="flag-cat" role="button" tabindex="0" aria-label="The cat on the prayer flags. Activate to pet it, but not too much."><use href="#cat"/></svg><span class="bubble" id="flag-bubble" aria-hidden="true" hidden></span></div>
 
   <!-- Hero: mandala + intro -->
   <section class="hero">
@@ -415,6 +418,27 @@
     <svg class="cat alt-cat" id="alt-cat"><use href="#cat"/></svg>
   </div>
 </aside>
+
+<!-- Shown when the cat on the flags has been poked too often. A joke: sites cannot really close a tab. -->
+<div class="cat-gone" id="cat-gone" role="dialog" aria-labelledby="cat-gone-title" hidden>
+  <div class="curtain l" aria-hidden="true"></div>
+  <div class="curtain r" aria-hidden="true"></div>
+  <div class="cg-card">
+    <p class="cg-kicker" lang="ne" aria-hidden="true">म्याउ</p>
+    <p class="cg-title" id="cat-gone-title">The cat got annoyed, yoinked your scroll and closed the curtains.</p>
+    <p class="small">Trade it back with treats.</p>
+    <div class="cg-row">
+    <label class="slide"><span class="slide-text" aria-hidden="true">Slide to give treats</span><input type="range" id="cg-slide" min="0" max="100" step="5" value="0" aria-label="Slide all the way to give the cat treats"></label>
+    <svg class="cat cg-cat" viewBox="0 0 120 120" aria-hidden="true"><use href="#cat"/>
+        <g class="cg-scroll">
+          <rect x="32" y="49" width="56" height="9" rx="2" fill="#f3e6c8" stroke="#2a1810" stroke-width="1.5"/>
+          <rect x="27" y="45" width="7" height="17" rx="3" fill="#e2b04a" stroke="#2a1810" stroke-width="1.5"/>
+          <rect x="86" y="45" width="7" height="17" rx="3" fill="#e2b04a" stroke="#2a1810" stroke-width="1.5"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
 
 <!-- Passport: stamps collected by exploring. Filled and shown by script.js. -->
 <button class="pp-btn" id="pp-btn" type="button" aria-expanded="false" aria-controls="pp-panel" hidden>

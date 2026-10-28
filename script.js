@@ -707,3 +707,117 @@ const trek = (() => {
     nextTicket();
   });
 })();
+
+// The cat. At the top of the page it sits on the prayer flags; once the visitor has scrolled down, a second copy
+// hangs upside down from the header's gold line. Poking either one builds up annoyance, which fades with time.
+// A website cannot close the browser tab, so when the cat has had enough it only covers the page with a "closed"
+// screen, and giving it treats brings the page back.
+(() => {
+  const gone = document.getElementById("cat-gone");
+  const SPOTS = ["flag", "hang"].map((k) => ({ cat: document.getElementById(k + "-cat"), bubble: document.getElementById(k + "-bubble") }));
+  if (!gone || SPOTS.some((s) => !s.cat || !s.bubble)) return;
+  const hangSpot = SPOTS[1];
+  const say = (t) => { if (typeof passport !== "undefined" && passport) passport.say(t); };
+  const MOODS = [[3, "Mrrp?"], [5, "The cat flicks its tail."], [7, "The cat is not amused."]];
+  const ASKS = ["meow", "pets, please?", "want to play?", "belly rubs?", "back scratches?", "psst. pet me.", "mrrp!"];
+  const LEAVE_AT = 9;
+  let annoyed = 0, last = performance.now(), bubbleTimer, wants = false;
+
+  // The flag cat scrolls out of sight. When the visitor is further down and the cat wants attention, it drops in
+  // upside down from the header's gold line, asks, and climbs back up once it has had its pets or given up.
+  const lower = () => scrollY > 220;
+  const here = () => SPOTS[lower() ? 1 : 0];
+  const syncHang = () => {
+    const show = wants && lower() && gone.hidden && !hangSpot.cat.classList.contains("fled");
+    hangSpot.cat.toggleAttribute("hidden", !show); // SVG elements have no .hidden property
+    if (!show) hangSpot.bubble.hidden = true;
+  };
+  addEventListener("scroll", syncHang, { passive: true });
+
+  const hideBubbles = () => SPOTS.forEach((s) => { s.bubble.hidden = true; });
+  const retire = () => { hideBubbles(); wants = false; syncHang(); };
+  const ask = () => {
+    if (gone.hidden && !document.hidden && !SPOTS[0].cat.classList.contains("fled")) {
+      wants = lower();
+      syncHang();
+      const spot = here();
+      hideBubbles();
+      spot.bubble.textContent = ASKS[(Math.random() * ASKS.length) | 0];
+      spot.bubble.hidden = false;
+      clearTimeout(bubbleTimer);
+      bubbleTimer = setTimeout(retire, 5000);
+    }
+    setTimeout(ask, 20000 + Math.random() * 25000);
+  };
+  setTimeout(ask, 9000);
+
+  const poke = (spot) => {
+    const now = performance.now();
+    annoyed = Math.max(0, annoyed - (now - last) / 2500) + 1; // calms down by one poke every 2.5 seconds
+    last = now;
+    hideBubbles();
+    clearTimeout(bubbleTimer);
+    if (spot === hangSpot) bubbleTimer = setTimeout(retire, 2500); // stays for a few more pokes, then climbs back up
+    spot.cat.classList.remove("poked");
+    void spot.cat.getBoundingClientRect();
+    spot.cat.classList.add("poked");
+    if (annoyed >= LEAVE_AT) return leave();
+    const mood = MOODS.filter(([n]) => Math.floor(annoyed) === n)[0];
+    say(mood ? mood[1] : "Purr.");
+  };
+
+  const leave = () => {
+    annoyed = 0;
+    wants = false;
+    SPOTS.forEach((s) => s.cat.classList.add("fled"));
+    setTimeout(() => {
+      gone.hidden = false;
+      slide.focus();
+    }, 650);
+  };
+
+  const title = document.getElementById("cat-gone-title");
+  const sub = gone.querySelector(".small");
+  const slide = document.getElementById("cg-slide");
+  const treat = () => {
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    slide.disabled = true;
+    slide.value = 100;
+    gone.classList.add("happy");
+    title.textContent = "Deal. Scroll returned.";
+    sub.textContent = "The cat is very pleased with its treats.";
+    setTimeout(back, still ? 500 : 2200);
+  };
+  const back = () => {
+    if (gone.classList.contains("leaving")) return;
+    gone.classList.add("leaving"); // the curtains open and the page sharpens again, then the overlay is removed
+    setTimeout(() => {
+      slide.disabled = false;
+      slide.value = 0;
+      gone.classList.remove("happy", "leaving");
+      title.textContent = "The cat got annoyed, yoinked your scroll and closed the curtains.";
+      sub.textContent = "Trade it back with treats.";
+      gone.hidden = true;
+      SPOTS.forEach((s) => s.cat.classList.remove("fled", "poked"));
+      syncHang();
+      here().cat.focus({ preventScroll: true });
+      say("The cat gave your scroll back.");
+    }, matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 500);
+  };
+
+  SPOTS.forEach((spot) => {
+    spot.cat.addEventListener("click", () => poke(spot));
+    spot.cat.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); poke(spot); } });
+  });
+  // Dragging the thumb all the way to the end gives the treats; letting go early springs it back.
+  slide.addEventListener("input", () => { if (+slide.value >= 98 && !slide.disabled) treat(); });
+  const springBack = () => {
+    if (slide.disabled || +slide.value >= 98) return;
+    const step = () => { slide.value = Math.max(0, +slide.value - 6); if (+slide.value > 0 && !slide.disabled) requestAnimationFrame(step); };
+    step();
+  };
+  slide.addEventListener("pointerup", springBack);
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && !gone.hidden && !slide.disabled) back(); });
+  syncHang();
+})();
+
