@@ -463,3 +463,8 @@ html.has-intro .curtain-intro { display: grid; }
 .shot { margin: 16px 0 0; }
 .shot img { display: block; width: 100%; height: auto; border: 3px double var(--gold-dim); border-radius: 3px; }
 .shot figcaption { margin-top: 6px; font-size: 13px; color: #5a4636; }
+
+/* at night the cat on the flags sleeps: it breathes slowly and stops asking for pets */
+.on-string.asleep { animation: breathe 4s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: scale(1.05, 1.03); } }
+@media (prefers-reduced-motion: reduce) { .on-string.asleep { animation: none; } }

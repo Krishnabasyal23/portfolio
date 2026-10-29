@@ -734,15 +734,22 @@ const trek = (() => {
   };
   addEventListener("scroll", syncHang, { passive: true });
 
+  // At night (the sky follows the visitor's local time) the cat on the flags sleeps instead of asking for pets.
+  const asleep = () => document.documentElement.dataset.sky === "night";
+  const syncSleep = () => SPOTS[0].cat.classList.toggle("asleep", asleep());
+  new MutationObserver(syncSleep).observe(document.documentElement, { attributes: true, attributeFilter: ["data-sky"] });
+  syncSleep();
+  SPOTS.forEach((s) => s.cat.addEventListener("animationend", () => s.cat.classList.remove("poked")));
+
   const hideBubbles = () => SPOTS.forEach((s) => { s.bubble.hidden = true; });
   const retire = () => { hideBubbles(); wants = false; syncHang(); };
   const ask = () => {
-    if (gone.hidden && !document.hidden && !SPOTS[0].cat.classList.contains("fled")) {
-      wants = lower();
+    if (gone.hidden && !document.hidden && !SPOTS[0].cat.classList.contains("fled") && !(asleep() && lower())) {
+      wants = lower() && !asleep();
       syncHang();
       const spot = here();
       hideBubbles();
-      spot.bubble.textContent = ASKS[(Math.random() * ASKS.length) | 0];
+      spot.bubble.textContent = asleep() ? "zzz..." : ASKS[(Math.random() * ASKS.length) | 0];
       spot.bubble.hidden = false;
       clearTimeout(bubbleTimer);
       bubbleTimer = setTimeout(retire, 5000);
@@ -763,7 +770,7 @@ const trek = (() => {
     spot.cat.classList.add("poked");
     if (annoyed >= LEAVE_AT) return leave();
     const mood = MOODS.filter(([n]) => Math.floor(annoyed) === n)[0];
-    say(mood ? mood[1] : "Purr.");
+    say(asleep() && !mood ? "Mrrp. Five more minutes." : mood ? mood[1] : "Purr.");
   };
 
   const leave = () => {
