@@ -400,6 +400,7 @@ const passport = (() => {
     { id: "reach", label: "Reached", hint: "Scroll down to the colophon", color: "#6b4f0e", tilt: "4deg" },
     { id: "momo", label: "Folded", hint: "Serve 3 momos in Momo Rush", color: "#8a2e5a", tilt: "-5deg" },
   ];
+  const VISA_AT = 5; // the visa needs any five stamps, so nobody has to find every one
   let got = {};
   try { got = JSON.parse(localStorage.getItem("portfolio-passport")) || {}; } catch { /* storage blocked: stamps last this visit only */ }
   const count = () => STAMPS.filter((s) => got[s.id]).length;
@@ -437,7 +438,7 @@ const passport = (() => {
     }
     $("pp-count").textContent = count();
     $("pp-total").textContent = STAMPS.length;
-    $("pp-visa").hidden = count() < STAMPS.length;
+    $("pp-visa").hidden = count() < VISA_AT;
   };
 
   const award = (id) => {
@@ -446,7 +447,7 @@ const passport = (() => {
     got[id] = new Date().toISOString();
     try { localStorage.setItem("portfolio-passport", JSON.stringify(got)); } catch { /* ignore */ }
     render();
-    say(count() === STAMPS.length ? "Visa approved! Open your passport." : `New stamp: ${stamp.label}`);
+    say(count() === VISA_AT ? "Visa approved! Open your passport." : `New stamp: ${stamp.label}`);
     btn.classList.remove("pulse");
     void btn.offsetWidth; // restart the pulse animation
     btn.classList.add("pulse");
