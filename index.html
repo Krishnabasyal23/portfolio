@@ -195,7 +195,15 @@
           <li><strong>Server is the source of truth.</strong> Payouts use exact decimals; the client only displays.</li>
           <li><strong>Honest odds.</strong> Season bonuses default to +4%, which keeps every strategy under 100% return.</li>
         </ul>
-        <p class="meta">Unity 6 &middot; C# &middot; Python server (group project; I built the Unity client, my friends built the backend) &middot; SHA-256 &middot; MIT licence</p>
+        <p class="meta">Unity 6 &middot; C# &middot; Python API server (group project) &middot; SQLite &middot; SHA-256 &middot; MIT licence</p>
+        <ul class="evidence" aria-label="Evidence for Catino">
+          <li><a href="https://github.com/Krishnabasyal23/kittycat" rel="noopener">Client code</a></li>
+          <li><a href="https://github.com/Krishnabasyal23/KittyAPI" rel="noopener">API code</a></li>
+          <li><a href="https://github.com/Krishnabasyal23/KittyAPI/tree/main/test" rel="noopener">223 server tests</a></li>
+          <li><a href="https://github.com/Krishnabasyal23/kittycat/blob/main/CHANGELOG.md" rel="noopener">Release notes</a></li>
+          <li>Resume: coming soon</li>
+        </ul>
+        <figure class="shot"><img src="assets/catino-round.png" width="960" height="540" loading="lazy" alt="Catino mid-round: a cat chases a fish across a summer meadow while the HUD shows a green FAIR-VERIFIED badge and a Distracted banner at 7.04x."><figcaption>A round of Catino ending in a distraction, with the fairness badge shown top left.</figcaption></figure>
       </div>
       <div class="seal">
         <div class="stamp ok" role="img" aria-label="Status: verifiable"><span>Verifiable</span></div>
@@ -213,9 +221,15 @@
         <ul>
           <li><strong>Rules separate from the engine.</strong> The domain and grader are plain C# with their own tests, outside Unity.</li>
           <li><strong>Replayable.</strong> Player actions are recorded as a log and the plate is rebuilt from it, which is what makes grading explainable.</li>
-          <li><strong>End to end, planned.</strong> Interaction → rules → event → database → SQL metrics → dashboard.</li>
+          <li><strong>End to end, partly built.</strong> Interaction → rules → event → backend (built) → SQL metrics and dashboard (next).</li>
         </ul>
-        <p class="meta">Unity 6 &middot; C# &middot; backend and SQL dashboard next &middot; a training prototype, not validated training software</p>
+        <p class="meta">Unity 6 &middot; C# &middot; FastAPI and SQLite backend &middot; a training prototype, not validated training software</p>
+        <ul class="evidence" aria-label="Evidence for Line Ready">
+          <li>Code: private repository, walkthrough on request</li>
+          <li>108 NUnit tests</li>
+          <li>Fictional menu spec only</li>
+          <li>Screenshots: coming soon</li>
+        </ul>
       </div>
       <div class="seal">
         <div class="stamp wip" role="img" aria-label="Status: in progress"><span>In progress</span></div>
@@ -274,14 +288,14 @@
           <h4>In use</h4>
           <ul class="chips">
             <li>C#</li><li>Unity 6</li><li>Python</li><li>Git &amp; GitHub</li>
-            <li>Unit testing (pytest, NUnit)</li><li>SHA-256 commit and reveal</li>
+            <li>SQL (SQLite, migrations)</li><li>Unit testing (pytest, NUnit)</li><li>SHA-256 commit and reveal</li>
             <li>Rules engines kept separate from the UI</li>
           </ul>
         </div>
         <div>
           <h4>Applying next</h4>
           <ul class="chips soft">
-            <li>SQL</li><li>pandas</li><li>Open-data analysis</li>
+            <li>pandas</li><li>Open-data analysis</li>
             <li>Dashboards</li><li>Data cleaning</li>
           </ul>
         </div>

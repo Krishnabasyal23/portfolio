@@ -455,3 +455,11 @@ footer p { max-width: 640px; margin: 0 auto; }
 .curtain-intro.open .intro-skip { opacity: 0; }
 html.has-intro .curtain-intro { display: grid; }
 @media (prefers-reduced-motion: reduce) { .curtain-intro { display: none !important; } }
+
+/* evidence rows and a project screenshot */
+.body .evidence { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 13px; }
+.evidence li { padding: 3px 10px; color: #4a3a2c; border: 1px solid var(--gold-dim); border-radius: 999px; }
+.evidence a { color: var(--vermilion); font-weight: 500; text-underline-offset: 2px; }
+.shot { margin: 16px 0 0; }
+.shot img { display: block; width: 100%; height: auto; border: 3px double var(--gold-dim); border-radius: 3px; }
+.shot figcaption { margin-top: 6px; font-size: 13px; color: #5a4636; }
