@@ -77,6 +77,7 @@
     <a href="#skills">Skills</a>
     <a href="#play">Play</a>
     <a href="#path">Experience</a>
+    <button class="nav-btn" id="about-btn" type="button" aria-haspopup="dialog">About</button>
     <a href="#colophon">Contact</a>
   </nav>
   <svg class="cat hang" id="hang-cat" role="button" tabindex="0" aria-label="The cat, hanging upside down from the header. Activate to pet it, but not too much." hidden><use href="#cat"/></svg>
@@ -466,6 +467,49 @@
         </g>
       </svg>
     </div>
+  </div>
+</div>
+
+<!-- About this site: hidden until the About button in the header is pressed. -->
+<div class="about" id="about" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
+  <div class="about-card">
+    <button class="about-close" id="about-close" type="button" aria-label="Close about">&times;</button>
+    <p class="pp-kicker">बारेमा</p>
+    <h2 id="about-title" tabindex="-1">About this site</h2>
+    <p class="about-note">The look, the ideas behind it, and every small thing hidden in it.</p>
+      <h3>Where it comes from</h3>
+      <p>The look borrows from Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs, mixed with a Chinese hanging scroll and old print engravings. Only ornament is used (lotus, mandala, borders), and no sacred figures are depicted.</p>
+      <p>The idea underneath is <em>don't trust, verify</em>. A stamp on a project says only what a visitor can actually check: VERIFIABLE, IN PROGRESS or PLANNED. The game seals its result before it starts. The site is hand-built in plain HTML, CSS, JavaScript and SVG, with no framework and no build step.</p>
+      <h3>Things to find</h3>
+      <dl class="feat">
+        <dt>The cat on the prayer flags</dt>
+        <dd>Poke it. It asks for attention now and then, and when you are further down the page it hangs upside down from the header to ask for pets. Annoy it too much and it pulls the curtains and yoinks your scroll until you slide over some treats. At night in your timezone it sleeps instead.</dd>
+        <dt>The curtain intro</dt>
+        <dd>Your first visit opens with curtains and a note from the cat. It plays once and is remembered, and you can skip it with the button or Escape.</dd>
+        <dt>Passport</dt>
+        <dd>Seven stamps are hidden in the site, such as inspecting every project, finishing a game round or petting the cat in the colophon. Any five earn a visa. Open it from the button in the corner.</dd>
+        <dt>Pocket Catino</dt>
+        <dd>A small version of my game. The round's SHA-256 seal is shown before the cat moves and the secret is revealed after, so you can check the result yourself.</dd>
+        <dt>Momo Rush</dt>
+        <dd>A kitchen-ticket game with a fictional menu. Fill to weight, pleat to the count, steam it, and the grader explains every miss.</dd>
+        <dt>Portal jumps</dt>
+        <dd>Clicking a section link opens a ring of sparks and carries you there. Click or press Escape to skip it.</dd>
+        <dt>Kathmandu clock and living sky</dt>
+        <dd>The footer shows the time in Nepal (UTC+5:45) and how far it is from you. The sky behind the page follows your own time of day, and you can tap the sky button to preview other times.</dd>
+        <dt>Trek meter</dt>
+        <dd>Optional, off by default. As you scroll, an altitude readout climbs from Kathmandu to the summit.</dd>
+        <dt>The engraved cat</dt>
+        <dd>In the colophon, its eyes follow your pointer and it purrs when petted.</dd>
+        <dt>Small details</dt>
+        <dd>The hero mandala shimmers, peach blossoms drift down, lanterns hang from the top, and each panel unrolls as you reach it.</dd>
+      </dl>
+      <h3>Good to know</h3>
+      <ul>
+        <li>Nothing leaves your browser. There are no trackers and no cookies. Your stamps, the trek meter choice and whether you have seen the intro are kept in localStorage on your device only.</li>
+        <li>If you prefer reduced motion, the intro, portal and drifting petals are switched off.</li>
+        <li>Buttons and cats can be reached and used with the keyboard.</li>
+        <li>The kitchen content is fictional. No employer material appears anywhere on this site.</li>
+      </ul>
   </div>
 </div>
 

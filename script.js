@@ -846,3 +846,18 @@ const trek = (() => {
   addEventListener("keydown", (e) => { if (e.key === "Escape") finish(); });
   setTimeout(finish, 2800);
 })();
+
+// About panel. Hidden until the About button is pressed; closes with the x, Escape or a click outside the card.
+(() => {
+  const btn = document.getElementById("about-btn"), box = document.getElementById("about");
+  if (!btn || !box) return;
+  const set = (open) => {
+    box.hidden = !open;
+    document.documentElement.classList.toggle("about-open", open);
+    if (open) document.getElementById("about-title").focus(); else btn.focus();
+  };
+  btn.addEventListener("click", () => set(true));
+  document.getElementById("about-close").addEventListener("click", () => set(false));
+  box.addEventListener("click", (e) => { if (e.target === box) set(false); });
+  addEventListener("keydown", (e) => { if (e.key === "Escape" && !box.hidden) set(false); });
+})();
