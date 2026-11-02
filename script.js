@@ -131,6 +131,9 @@ if (pupils.length) {
   out.addEventListener("click", () => running && end(true));
 })();
 
+// The professional view is the default; the playful view adds the decorative extras below and switches them on and off live.
+const playful = () => document.documentElement.dataset.view === "playful";
+
 // Drifting peach blossoms, drawn as 14 CSS-animated petals. Skipped for visitors who prefer reduced motion.
 if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
   const layer = document.createElement("div");
@@ -334,7 +337,7 @@ if (portalFx) {
       const id = link.getAttribute("href");
       const target = id.length > 1 && document.querySelector(id);
       if (!target || link.classList.contains("skip") || e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
-      if (calm.matches) return;
+      if (calm.matches || !playful()) return;
       e.preventDefault();
       if (portalFx.running) return;
       const box = link.getBoundingClientRect();
@@ -443,7 +446,7 @@ const passport = (() => {
 
   const award = (id) => {
     const stamp = STAMPS.find((s) => s.id === id);
-    if (!stamp || got[id]) return;
+    if (!stamp || got[id] || !playful()) return;
     got[id] = new Date().toISOString();
     try { localStorage.setItem("portfolio-passport", JSON.stringify(got)); } catch { /* ignore */ }
     render();
@@ -745,7 +748,7 @@ const trek = (() => {
   const hideBubbles = () => SPOTS.forEach((s) => { s.bubble.hidden = true; });
   const retire = () => { hideBubbles(); wants = false; syncHang(); };
   const ask = () => {
-    if (gone.hidden && !document.hidden && !SPOTS[0].cat.classList.contains("fled") && !(asleep() && lower())) {
+    if (playful() && gone.hidden && !document.hidden && !SPOTS[0].cat.classList.contains("fled") && !(asleep() && lower())) {
       wants = lower() && !asleep();
       syncHang();
       const spot = here();
@@ -860,4 +863,27 @@ const trek = (() => {
   document.getElementById("about-close").addEventListener("click", () => set(false));
   box.addEventListener("click", (e) => { if (e.target === box) set(false); });
   addEventListener("keydown", (e) => { if (e.key === "Escape" && !box.hidden) set(false); });
+})();
+
+// View switch. The head script has already set data-view before paint; this wires the two buttons, remembers the
+// choice in localStorage (when available) and keeps ?view= in the address so a link can open either view.
+(() => {
+  const root = document.documentElement;
+  const buttons = [...document.querySelectorAll(".view-switch button")];
+  const show = (v) => {
+    root.dataset.view = v;
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.v === v)));
+  };
+  show(playful() ? "playful" : "pro");
+  buttons.forEach((b) => b.addEventListener("click", () => {
+    const v = b.dataset.v;
+    show(v);
+    try { localStorage.setItem("portfolio-view", v); } catch { /* ignore */ }
+    try {
+      const url = new URL(location.href);
+      if (v === "playful") url.searchParams.set("view", "playful"); else url.searchParams.delete("view");
+      history.replaceState(null, "", url);
+    } catch { /* some file:// pages refuse; the saved choice still works */ }
+    if (v === "playful") document.dispatchEvent(new CustomEvent("stamp", { detail: "arrive" })); // the arrival stamp is skipped while the page is professional
+  }));
 })();

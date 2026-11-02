@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-view="pro">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,8 +20,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&text=%E9%AA%8C&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 <script>
-  // First visit only: decide before the page paints whether to show the curtain intro. Skipped when the visitor prefers reduced motion.
-  try { if (!localStorage.getItem("portfolio-intro") && !matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("has-intro"); } catch (e) { /* storage blocked: no intro */ }
+  // Pick the view before the page paints: ?view= in the link, else the saved choice, else the professional view.
+  // The curtain intro belongs to the playful view and shows on a first visit only, never for reduced motion.
+  try {
+    var d = document.documentElement, p = new URLSearchParams(location.search).get("view"), v = null;
+    try {
+      if (p === "playful" || p === "pro") localStorage.setItem("portfolio-view", p);
+      v = localStorage.getItem("portfolio-view");
+    } catch (e) { v = p; }
+    d.dataset.view = v === "playful" ? "playful" : "pro";
+    if (d.dataset.view === "playful" && !localStorage.getItem("portfolio-intro") && !matchMedia("(prefers-reduced-motion: reduce)").matches) d.classList.add("has-intro");
+  } catch (e) { /* storage blocked: professional view, no intro */ }
 </script>
 </head>
 <body>
@@ -71,7 +80,7 @@
 </svg>
 
 <header class="top">
-  <a class="mark" href="#top" aria-label="Top"><svg class="cat" aria-hidden="true"><use href="#cat"/></svg></a>
+  <a class="mark" href="#top" aria-label="Top"><svg class="cat" aria-hidden="true"><use href="#cat"/></svg><span class="mark-name only-pro">Krishna</span></a>
   <nav aria-label="Sections">
     <a href="#work">Work</a>
     <a href="#skills">Skills</a>
@@ -80,6 +89,10 @@
     <button class="nav-btn" id="about-btn" type="button" aria-haspopup="dialog">About</button>
     <a href="#colophon">Contact</a>
   </nav>
+  <div class="view-switch" role="group" aria-label="Choose a view">
+    <button type="button" data-v="pro" aria-pressed="true">Professional</button>
+    <button type="button" data-v="playful" aria-pressed="false">Playful</button>
+  </div>
   <svg class="cat hang" id="hang-cat" role="button" tabindex="0" aria-label="The cat, hanging upside down from the header. Activate to pet it, but not too much." hidden><use href="#cat"/></svg>
   <span class="bubble hang-bubble" id="hang-bubble" aria-hidden="true" hidden></span>
 </header>
@@ -505,7 +518,7 @@
       </dl>
       <h3>Good to know</h3>
       <ul>
-        <li>Nothing leaves your browser. There are no trackers and no cookies. Your stamps, the trek meter choice and whether you have seen the intro are kept in localStorage on your device only.</li>
+        <li>Nothing leaves your browser. There are no trackers and no cookies. Your choice of view, your stamps, the trek meter choice and whether you have seen the intro are kept in localStorage on your device only.</li>
         <li>If you prefer reduced motion, the intro, portal and drifting petals are switched off.</li>
         <li>Buttons and cats can be reached and used with the keyboard.</li>
         <li>The kitchen content is fictional. No employer material appears anywhere on this site.</li>

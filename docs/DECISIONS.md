@@ -32,3 +32,4 @@
 - 2026-10-26 Reversed: the Gurkha tribute and khukuri were removed from the footer because the page already carries a lot. The momo game stays.
 - 2026-10-26 Contact links live only in the colophon. The passport's visa used to repeat GitHub and LinkedIn, but its buttons sat below the fold of a scrolling panel and duplicated the real ones. Contact details should never depend on a game, so the visa now offers a "Go to contact" jump to the colophon, and the panel scrolls to the finale when opened.
 - 2026-10-28 The passport visa needs any 5 of the 7 stamps instead of all of them, so visitors are not sent hunting for a stamp they cannot find.
+- 2026-11-02 The site opens in a professional view and the decorative one is a switch, kept in localStorage and openable with ?view=playful, because a recruiter should see the work first and the playful design is better as a choice than a first impression.
