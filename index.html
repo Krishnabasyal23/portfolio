@@ -84,7 +84,7 @@
   <nav aria-label="Sections">
     <a href="#work">Work</a>
     <a href="#skills">Skills</a>
-    <a href="#play">Play</a>
+    <a href="#play"><span class="only-playful">Play</span><span class="only-pro">Demos</span></a>
     <a href="#path">Experience</a>
     <button class="nav-btn" id="about-btn" type="button" aria-haspopup="dialog">About</button>
     <a href="#colophon">Contact</a>
@@ -320,8 +320,9 @@
   <div class="dhaka" aria-hidden="true"></div>
   <!-- Play: a pocket Catino. The round is sealed with SHA-256 before it starts and checked afterward. -->
   <section id="play" class="scroll">
-    <h2 class="section-title"><span class="dev">खेल</span> Play</h2>
-    <p class="section-note">A pocket Catino. Cash out before the cat spots the butterfly. No money, no accounts, same idea as the real game: seal first, reveal after.</p>
+    <h2 class="section-title"><span class="dev">खेल</span> <span class="only-playful">Play</span><span class="only-pro">Demos</span></h2>
+    <p class="section-note only-playful">A pocket Catino. Cash out before the cat spots the butterfly. No money, no accounts, same idea as the real game: seal first, reveal after.</p>
+    <p class="section-note only-pro">Two small interactive demos: a commit-and-reveal round you can verify yourself, and a ticket grader that explains each miss. No money, no accounts.</p>
     <div class="panel single reveal" id="game">
       <div class="body">
         <div class="track" aria-hidden="true">
@@ -405,10 +406,11 @@
   <div class="dhaka" aria-hidden="true"></div>
   <!-- Colophon -->
   <section id="colophon" class="scroll colophon">
-    <h2 class="section-title"><span class="dev">निवेदन</span> Colophon</h2>
+    <h2 class="section-title"><span class="dev">निवेदन</span> <span class="only-playful">Colophon</span><span class="only-pro">Contact</span></h2>
     <div class="panel reveal single has-plate">
       <div class="body">
-        <p>Like the inscription at the foot of a paubha, this is who made the work and why.</p>
+        <p class="only-playful">Like the inscription at the foot of a paubha, this is who made the work and why.</p>
+        <p class="only-pro">A short note on who built this work and why.</p>
         <p>I'm a university student who also works the line in a commercial kitchen. That's where the ideas come from: tickets, timing, portions, allergens, and the habit of checking that a thing was done right instead of assuming it was.</p>
         <p>I'm looking for a junior IT or data role where that habit is useful.</p>
         <span class="chop" role="img" aria-label="Red seal meaning verified">验</span>
@@ -450,7 +452,8 @@
     <label class="opt"><input type="checkbox" id="opt-trek-foot"> Trek meter</label>
     <button class="linklike" id="sky-btn" type="button">Sky: <span id="sky-name">day</span> (tap to preview)</button>
   </p>
-  <p>Hand-built in plain HTML, CSS and SVG. Inspired by Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs; no sacred imagery is depicted.</p>
+  <p class="only-playful">Hand-built in plain HTML, CSS and SVG. Inspired by Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs; no sacred imagery is depicted.</p>
+  <p class="only-pro">Hand-built in plain HTML, CSS and JavaScript, with no framework or build step.</p>
 </footer>
 
 <!-- Altitude meter: scroll position mapped onto a trek from Kathmandu to the summit. Decorative, so hidden from screen readers. -->
@@ -491,10 +494,11 @@
     <h2 id="about-title" tabindex="-1">About this site</h2>
     <p class="about-note">The look, the ideas behind it, and every small thing hidden in it.</p>
       <h3>Where it comes from</h3>
-      <p>The look borrows from Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs, mixed with a Chinese hanging scroll and old print engravings. Only ornament is used (lotus, mandala, borders), and no sacred figures are depicted.</p>
+      <p class="only-playful">The look borrows from Nepali prayer flags, Himalayan ridgelines, dhaka fabric and tiered temple roofs, mixed with a Chinese hanging scroll and old print engravings. Only ornament is used (lotus, mandala, borders), and no sacred figures are depicted.</p>
+      <p class="only-pro">This site is hand-built in plain HTML, CSS and JavaScript, with no framework and no build step, and it opens straight from a local file. The Playful view is an alternate, more decorative design with small interactive extras; use the switch in the header to try it.</p>
       <p>The idea underneath is <em>don't trust, verify</em>. A stamp on a project says only what a visitor can actually check: VERIFIABLE, IN PROGRESS or PLANNED. The game seals its result before it starts. The site is hand-built in plain HTML, CSS, JavaScript and SVG, with no framework and no build step.</p>
-      <h3>Things to find</h3>
-      <dl class="feat">
+      <h3 class="only-playful">Things to find</h3>
+      <dl class="feat only-playful">
         <dt>The cat on the prayer flags</dt>
         <dd>Poke it. It asks for attention now and then, and when you are further down the page it hangs upside down from the header to ask for pets. Annoy it too much and it pulls the curtains and yoinks your scroll until you slide over some treats. At night in your timezone it sleeps instead.</dd>
         <dt>The curtain intro</dt>
@@ -518,8 +522,9 @@
       </dl>
       <h3>Good to know</h3>
       <ul>
-        <li>Nothing leaves your browser. There are no trackers and no cookies. Your choice of view, your stamps, the trek meter choice and whether you have seen the intro are kept in localStorage on your device only.</li>
-        <li>If you prefer reduced motion, the intro, portal and drifting petals are switched off.</li>
+        <li class="only-pro">Nothing leaves your browser. There are no trackers and no cookies. Your choice of view is kept in localStorage on your device only.</li>
+        <li class="only-playful">Nothing leaves your browser. There are no trackers and no cookies. Your choice of view, your stamps, the trek meter choice and whether you have seen the intro are kept in localStorage on your device only.</li>
+        <li class="only-playful">If you prefer reduced motion, the intro, portal and drifting petals are switched off.</li>
         <li>Buttons and cats can be reached and used with the keyboard.</li>
         <li>The kitchen content is fictional. No employer material appears anywhere on this site.</li>
       </ul>
