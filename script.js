@@ -842,12 +842,11 @@ const trek = (() => {
     if (done) return;
     done = true;
     el.classList.add("open");
-    try { localStorage.setItem("portfolio-intro", "1"); } catch { /* ignore */ }
     setTimeout(() => { document.documentElement.classList.remove("has-intro"); el.classList.remove("open"); }, 800);
   };
   document.getElementById("intro-skip").addEventListener("click", finish);
   addEventListener("keydown", (e) => { if (e.key === "Escape") finish(); });
-  setTimeout(finish, 2800);
+  setTimeout(finish, 2200);
 })();
 
 // About panel. Hidden until the About button is pressed; closes with the x, Escape or a click outside the card.

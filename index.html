@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="styles.css">
 <script>
   // Pick the view before the page paints: ?view= in the link, else the saved choice, else the professional view.
-  // The curtain intro belongs to the playful view and shows on a first visit only, never for reduced motion.
   try {
     var d = document.documentElement, p = new URLSearchParams(location.search).get("view"), v = null;
     try {
@@ -29,8 +28,9 @@
       v = localStorage.getItem("portfolio-view");
     } catch (e) { v = p; }
     d.dataset.view = v === "playful" ? "playful" : "pro";
-    if (d.dataset.view === "playful" && !localStorage.getItem("portfolio-intro") && !matchMedia("(prefers-reduced-motion: reduce)").matches) d.classList.add("has-intro");
-  } catch (e) { /* storage blocked: professional view, no intro */ }
+  } catch (e) { /* storage blocked: professional view */ }
+  // The cat opens the curtains on every page load, in both views, unless the visitor prefers reduced motion.
+  try { if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("has-intro"); } catch (e) { /* no intro */ }
 </script>
 </head>
 <body>
@@ -42,8 +42,10 @@
   <div class="curtain r"></div>
   <div class="intro-scroll">
     <svg class="cat" viewBox="0 0 100 100" aria-hidden="true"><use href="#cat"/></svg>
-    <p class="intro-k">Hello, thanks for visiting. I hope you brought treats.</p>
-    <p class="intro-t">Please have a look around and meet my master, Krishna.</p>
+    <p class="intro-k only-playful">Hello, thanks for visiting. I hope you brought treats.</p>
+    <p class="intro-t only-playful">Please have a look around and meet my master, Krishna.</p>
+    <p class="intro-k only-pro">Welcome. Let me open the curtains.</p>
+    <p class="intro-t only-pro">Krishna's portfolio</p>
   </div>
   <button class="intro-skip" id="intro-skip" type="button">Skip</button>
 </div>
@@ -502,7 +504,7 @@
         <dt>The cat on the prayer flags</dt>
         <dd>Poke it. It asks for attention now and then, and when you are further down the page it hangs upside down from the header to ask for pets. Annoy it too much and it pulls the curtains and yoinks your scroll until you slide over some treats. At night in your timezone it sleeps instead.</dd>
         <dt>The curtain intro</dt>
-        <dd>Your first visit opens with curtains and a note from the cat. It plays once and is remembered, and you can skip it with the button or Escape.</dd>
+        <dd>Every visit opens with curtains and a note from the cat. It lasts about two seconds, and you can skip it with the button or Escape.</dd>
         <dt>Passport</dt>
         <dd>Seven stamps are hidden in the site, such as inspecting every project, finishing a game round or petting the cat in the colophon. Any five earn a visa. Open it from the button in the corner.</dd>
         <dt>Pocket Catino</dt>
@@ -523,7 +525,7 @@
       <h3>Good to know</h3>
       <ul>
         <li class="only-pro">Nothing leaves your browser. There are no trackers and no cookies. Your choice of view is kept in localStorage on your device only.</li>
-        <li class="only-playful">Nothing leaves your browser. There are no trackers and no cookies. Your choice of view, your stamps, the trek meter choice and whether you have seen the intro are kept in localStorage on your device only.</li>
+        <li class="only-playful">Nothing leaves your browser. There are no trackers and no cookies. Your choice of view, your stamps, and the trek meter choice are kept in localStorage on your device only.</li>
         <li class="only-playful">If you prefer reduced motion, the intro, portal and drifting petals are switched off.</li>
         <li>Buttons and cats can be reached and used with the keyboard.</li>
         <li>The kitchen content is fictional. No employer material appears anywhere on this site.</li>
